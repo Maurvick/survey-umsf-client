@@ -1,0 +1,21 @@
+    // Create divName for selectBoxID select box
+    let divName = document.createElement('div');
+    divName .className = 'form-group';
+    form.appendChild(divName);
+
+    // Create selectBoxID select box
+    let selectID = document.createElement('select');
+    divName.innerHTML = "<label for=\"selectID\">" +
+        "2. Викладає матеріал логічно та зрозуміло</label>";
+    selectID.className = 'form-control';
+    selectID.setAttribute('id','selectID');
+    selectID.required = true;
+
+    divName.appendChild(selectID);
+
+    for (let i = 0; i < scores.length; i++) {
+        let option = document.createElement('option');
+        option.value = scores[i];
+        option.text = scores[i];
+        selectID.appendChild(option);
+    }
