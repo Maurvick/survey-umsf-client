@@ -1,44 +1,54 @@
 function sendAnswers() {
-    let educationLevelSelect = document.getElementById("educationLevelSelect").value;
-    let yearSelect = document.getElementById("yearSelect").value;
-    let educationalFormSelect = document.getElementById("educationalFormSelect").value;
-    let specialitySelect = document.getElementById("specialitySelect").value;
+	let educationLevelSelect = document.getElementById("educationLevelSelect").value;
+	let yearSelect = document.getElementById("yearSelect").value;
+	let educationalFormSelect = document.getElementById("educationalFormSelect").value;
+	let specialitySelect = document.getElementById("specialitySelect").value;
 
-    let url = "http://localhost:8080/survey/subject/getLecturerByParams" + 
-    "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect + "&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
+	let url = "http://localhost:8080/survey/subject/getSubjectByParams";
+	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect + "&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
 
-    // sendValues(url);
+
+	// let url = "http://localhost:8080/survey/subject";
+	// let params = '';
+	sendValuesFetch(url, encodeURI(params), false).then(() => {
+		console.log('The values have been sent...');
+	});
 }
 
-function sendValues(url, params) {
-	let getParams = encodeURI(params);
-	if (getParams == null) {
-		return false;
-	} else {
-		let http = new XMLHttpRequest();
-		
-		http.open("GET", url, true);
-		console.log("getParams -- "+ getParams);
-		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-		http.send(getParams);
+async function sendValuesFetch(url, params, isReload){
+	console.log(url+params);
+	url += params;
 
-		http.onerror = function() {
-			alert('Помилка з`єднання');
-		};
+	let response = await fetch(url, {
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			// 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin' :'http://localhost:8080/',
+			'Access-Control-Allow-Credentials':'true'
+		}
+	});
 
-		http.onload = function() {
-			if ( http.responseText.includes("Error update")) {
-				alert("Не вдалося оновити.");
-				return;
-			}
-			if (http.responseText.includes("Error insert")) {
-				alert("Не вдалося додати.");
-				return;
-			}
-			if (http.responseText.includes("Error delete")) {
-				alert("Не вдалося видалити.");
-			}
-	    };
-    } 
+	let resultText = await response.json();
+	console.log(resultText);
+
+	if (resultText.includes("Error update")) {
+		alert("Неудалось обновить");
+		return;
+	}
+
+	if (resultText.includes("Error insert")) {
+		alert("Не удалось добавить.");
+		return;
+	}
+
+	if (resultText.includes("Error delete")) {
+		alert("Неудалось удалить");
+		return;
+	}
+
+	if (isReload) {
+		location.reload();
+	}
 }
-
