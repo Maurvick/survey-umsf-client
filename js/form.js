@@ -12,7 +12,8 @@ const speciality =  [
     "Маркетинг", "Облік i оподаткування", "Політологія", "Культурологія", "Фізична культура"
 ];
 let subject = [];
-const lecturer = [];
+let lecturer = [];
+
 
 if (!localStorage.getItem("educationLevelSelect")) {
     localStorage.setItem("educationLevelSelect",'');
@@ -81,14 +82,19 @@ document.addEventListener('DOMContentLoaded', function() {
             let valueYear = document.getElementById('yearSelect').value;
             let valueSpeciality = document.getElementById('specialitySelect').value;
 
+            let existingElement = document.getElementById('selectDiscipline');
+
             if (valueEducationLevel !== '' && valueYear !== '' &&
                 valueSpeciality !== '' && valueEducationalForm !== '') {
                 getAnswers();
                 subject = getSubjects();
-                createDisciplineSelectBox();
-                createTeacherSelectBox();
-                createButtonSubmit();
                 checkStorage();
+
+                if (!document.body.contains(existingElement)) {
+                    createDisciplineSelectBox();
+                    createTeacherSelectBox();
+                    createButtonSubmit();
+                }
             }
         }));
 });
@@ -104,7 +110,6 @@ let createDisciplineSelectBox = function f1() {
 
     // Create discipline select box
     let selectDiscipline = document.createElement('select');
-    let disciplines = ["", "Менеджмент"];
 
     divDisciplines.innerHTML = "<label for=\"selectDiscipline\">Дисципліна</label>";
     selectDiscipline.className = 'form-control';
