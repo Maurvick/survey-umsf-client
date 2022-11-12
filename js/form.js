@@ -1,7 +1,8 @@
+const educationLevel = ['', 'Магістр', 'Бакалавр'];
 const years = ['', '2019', '2020', '2021', '2022'];
-
+const educationalForm = ['', 'Денна', 'Заочна'];
 const speciality =  [
-    "", "Міжнародне право", "Публічне управління або адміністрування",
+    "", "Обліково-аналітичне забезпеченн", "Публічне управління або адміністрування",
     "Туризм", "Кібербезпека", "Право", "Менеджмент", "Журналістика",
     "Економіка", "Історія та археологія", "Міжнародні економічні відносини",
     "Транспортні технології", "Готельно-ресторанна справа", "Комп'ютерні науки",
@@ -11,11 +12,46 @@ const speciality =  [
     "Маркетинг", "Облік i оподаткування", "Політологія", "Культурологія", "Фізична культура"
 ];
 
-document.addEventListener('DOMContentLoaded', function() {
+if(!localStorage.getItem("educationLevelSelect")){
+    localStorage.setItem("educationLevelSelect",'');
+}
+if(!localStorage.getItem("yearSelect")){
+    localStorage.setItem("yearSelect",'');
+}
+if(!localStorage.getItem("educationalFormSelect")){
+    localStorage.setItem("educationalFormSelect",'');
+}
+if(!localStorage.getItem("specialitySelect")){
+    localStorage.setItem("specialitySelect",'');
+}
 
-    // Fill options for YEAR and SPECIALITY selection
+
+document.addEventListener('DOMContentLoaded', function() {
+    let educationLevelSelect = document.getElementById('educationLevelSelect');
     let yearSelect = document.getElementById('yearSelect');
+    let educationalFormSelect = document.getElementById('educationalFormSelect');
     let selectSpeciality = document.getElementById('specialitySelect');
+
+    for (let i = 0; i < educationLevel.length; i++) {
+        let option = document.createElement('option');
+        option.value = educationLevel[i];
+        option.text = educationLevel[i];
+        educationLevelSelect.appendChild(option);
+    }
+
+    for (let i = 0; i < years.length; i++) {
+        let option = document.createElement('option');
+        option.value = years[i];
+        option.text = years[i];
+        yearSelect.appendChild(option);
+    }
+
+    for (let i = 0; i < educationalForm.length; i++) {
+        let option = document.createElement('option');
+        option.value = educationalForm[i];
+        option.text = educationalForm[i];
+        educationalFormSelect.appendChild(option);
+    }
 
     for (let i = 0; i < speciality.length; i++) {
         let option = document.createElement('option');
@@ -24,11 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
         selectSpeciality.appendChild(option);
     }
 
-    for (let i = 0; i < years.length; i++) {
-        let option = document.createElement('option');
-        option.value = years[i];
-        option.text = years[i];
-        yearSelect.appendChild(option);
+    if(localStorage.getItem("educationLevelSelect")){
+        educationLevelSelect.value = localStorage.getItem("educationLevelSelect");
+    }
+    if(localStorage.getItem("yearSelect")){
+        yearSelect.value = localStorage.getItem("yearSelect");
+    }
+    if(localStorage.getItem("educationalFormSelect")){
+        educationalFormSelect.value = localStorage.getItem("educationalFormSelect");
+    }
+    if(localStorage.getItem("specialitySelect")){
+        selectSpeciality.value = localStorage.getItem("specialitySelect");
     }
 
     // Create new selection boxes
@@ -77,6 +119,7 @@ let createDisciplineSelectBox = function f1() {
     }
 }
 
+// New select box render
 let createTeacherSelectBox = function f2() {
     let form = document.querySelector('form');
 
@@ -104,6 +147,23 @@ let createTeacherSelectBox = function f2() {
     }
 }
 
+// function checkStorage(){
+//     if(localStorage.getItem("educationLevelSelect") != "" && localStorage.getItem("yearSelect") != ""  && localStorage.getItem("educationalFormSelect") != ""  && localStorage.getItem("specialitySelect") != ""){
+//         f1();
+//     }
+// }
+// checkStorage();
+
+// let sectors = document.querySelectorAll('.form-group');
+// sectors.forEach((e) => e.addEventListener('change',(event) => {
+//     element_id = e.querySelector('select').id;
+//     if(!localStorage.getItem(localStorage)){
+//         localStorage.setItem(element_id, event.target.value);
+//     }
+//     checkStorage();
+// }));
+
+// Sends answers and creates new form
 function createButtonSubmit() {
     let form = document.querySelector('form');
     let buttonSubmit = document.createElement('button');
@@ -114,16 +174,18 @@ function createButtonSubmit() {
     form.appendChild(buttonSubmit);
 
     form.onsubmit = function() {
+        getAnswers();
         createNewForm();
         console.log("Next page...");
     }
 }
 
+// Create teacher form
 function createNewForm() {
     // Delete form
-    let pageElement = document.querySelector('#firstForm');
+    let pageElement = document.querySelector('form');
 
-    if (document.querySelector('#firstForm')) {
+    if (document.querySelector('form')) {
         pageElement.remove()
     }
 
@@ -134,7 +196,6 @@ function createNewForm() {
     let horizontalRule = document.createElement('hr');
     let breakText = document.createElement('br');
 
-    form.id = 'secondForm';
     main.appendChild(form);
 
     // Create headingScore
@@ -421,11 +482,12 @@ function createNewForm() {
     }
 }
 
+// Survey results
 function stats() {
     // Delete form
-    let pageElement = document.querySelector('#thirdForm');
+    let pageElement = document.querySelector('form');
 
-    if (document.querySelector('#thirdForm')) {
+    if (document.querySelector('form')) {
         pageElement.remove()
     }
 
