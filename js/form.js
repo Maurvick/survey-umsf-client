@@ -12,19 +12,29 @@ const speciality =  [
     "Маркетинг", "Облік i оподаткування", "Політологія", "Культурологія", "Фізична культура"
 ];
 
-if(!localStorage.getItem("educationLevelSelect")){
+if (!localStorage.getItem("educationLevelSelect")) {
     localStorage.setItem("educationLevelSelect",'');
 }
-if(!localStorage.getItem("yearSelect")){
+
+if (!localStorage.getItem("yearSelect")) {
     localStorage.setItem("yearSelect",'');
 }
-if(!localStorage.getItem("educationalFormSelect")){
+
+if (!localStorage.getItem("educationalFormSelect")) {
     localStorage.setItem("educationalFormSelect",'');
 }
-if(!localStorage.getItem("specialitySelect")){
+
+if (!localStorage.getItem("specialitySelect")) {
     localStorage.setItem("specialitySelect",'');
 }
 
+function checkStorage() {
+    if (localStorage.getItem("educationLevelSelect") !== "" &&
+        localStorage.getItem("yearSelect") !== ""  &&
+        localStorage.getItem("educationalFormSelect") !== ""  &&
+        localStorage.getItem("specialitySelect") !== "") {
+    }
+} checkStorage();
 
 document.addEventListener('DOMContentLoaded', function() {
     let educationLevelSelect = document.getElementById('educationLevelSelect');
@@ -60,20 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         selectSpeciality.appendChild(option);
     }
 
-    if(localStorage.getItem("educationLevelSelect")){
-        educationLevelSelect.value = localStorage.getItem("educationLevelSelect");
-    }
-    if(localStorage.getItem("yearSelect")){
-        yearSelect.value = localStorage.getItem("yearSelect");
-    }
-    if(localStorage.getItem("educationalFormSelect")){
-        educationalFormSelect.value = localStorage.getItem("educationalFormSelect");
-    }
-    if(localStorage.getItem("specialitySelect")){
-        selectSpeciality.value = localStorage.getItem("specialitySelect");
-    }
 
-    // Create new selection boxes
     document.querySelectorAll('.form-group').forEach((e) =>
         e.addEventListener('change',() => {
 
@@ -87,8 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 createDisciplineSelectBox();
                 createTeacherSelectBox();
                 createButtonSubmit();
+                checkStorage();
             }
-    }));
+        }));
 });
 
 // New select box render
@@ -147,22 +145,6 @@ let createTeacherSelectBox = function f2() {
     }
 }
 
-// function checkStorage(){
-//     if(localStorage.getItem("educationLevelSelect") != "" && localStorage.getItem("yearSelect") != ""  && localStorage.getItem("educationalFormSelect") != ""  && localStorage.getItem("specialitySelect") != ""){
-//         f1();
-//     }
-// }
-// checkStorage();
-
-// let sectors = document.querySelectorAll('.form-group');
-// sectors.forEach((e) => e.addEventListener('change',(event) => {
-//     element_id = e.querySelector('select').id;
-//     if(!localStorage.getItem(localStorage)){
-//         localStorage.setItem(element_id, event.target.value);
-//     }
-//     checkStorage();
-// }));
-
 // Sends answers and creates new form
 function createButtonSubmit() {
     let form = document.querySelector('form');
@@ -219,7 +201,8 @@ function createNewForm() {
     // This variable used for all next select boxes
     let scores = ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
-    divCompetence.innerHTML = "<label for=\"selectTeacher\">1. Викладач компетентний у дисципліні та вільно володіє теоретичним матеріалом</label>";
+    divCompetence.innerHTML = "<label for=\"selectTeacher\">" +
+        "1. Викладач компетентний у дисципліні та вільно володіє теоретичним матеріалом</label>";
     selectCompetence.className = 'form-control';
     selectCompetence.setAttribute('id','selectCompetence');
     selectCompetence.required = true;
@@ -461,7 +444,8 @@ function createNewForm() {
 
     // Create textAreaComment
     let textAreaComment = document.createElement('textarea');
-    divComment.innerHTML = "<label for=\"comment\">12. Ваші побажання щодо покращення викладання цієї дисципліни</label>";
+    divComment.innerHTML = "<label for=\"comment\">" +
+        "12. Ваші побажання щодо покращення викладання цієї дисципліни</label>";
     textAreaComment.className = 'form-control';
     textAreaComment.setAttribute('id','comment');
     textAreaComment.setAttribute('name','comment');
@@ -484,27 +468,24 @@ function createNewForm() {
 
 // Survey results
 function stats() {
-    // Delete form
-    let pageElement = document.querySelector('form');
 
     if (document.querySelector('form')) {
-        pageElement.remove()
+        document.querySelector('form').remove()
     }
 
     // Create new form
-    // let main = document.getElementsByTagName('main')[0];
     let main = document.querySelector('main');
     let form = document.createElement('form');
-    // let horizontalRule = document.createElement('hr');
+    let horizontalRule = document.createElement('hr');
+    let lineBreak = document.createElement('br');
 
-    form.id = 'thirdForm';
     main.appendChild(form);
-    // form.appendChild(horizontalRule);
 
     // Create headingScore
     let headingScore = document.createElement('h2');
-    // let horizontalRuleScore = document.createElement('hr');
     headingScore.innerText = "Статистика";
+    form.id = 'thirdForm';
     form.append(headingScore);
-    // form.appendChild(horizontalRuleScore);
+    form.appendChild(horizontalRule);
+    form.appendChild(lineBreak);
 }
