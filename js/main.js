@@ -33,6 +33,23 @@ async function getSubjects() {
 	return await sendValuesFetch(url, encodeURI(params), false);
 }
 
+async function getLecturers() {
+	let educationLevelSelect = document.getElementById("educationLevelSelect").value;
+	let yearSelect = document.getElementById("yearSelect").value;
+	let educationalFormSelect = document.getElementById("educationalFormSelect").value;
+	let specialitySelect = document.getElementById("specialitySelect").value;
+
+	let url = "http://localhost:8080/survey/subject/getLecturerByParams";
+	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
+		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect +
+		"&title=" + title;
+
+	console.log('getLecturers() is working...');
+
+	
+	return await sendValuesFetch(url, encodeURI(params), false);
+}
+
 // Send answers to server
 async function sendValuesFetch(url, params, isReload) {
 

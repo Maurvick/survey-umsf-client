@@ -83,23 +83,39 @@ document.addEventListener('DOMContentLoaded', function() {
             let valueSpeciality = document.getElementById('specialitySelect').value;
 
             let existingElement = document.getElementById('selectDiscipline');
+            let existingElementLecturer = document.getElementById('selectTeacher');
+
 
             if (valueEducationLevel !== '' && valueYear !== '' &&
                 valueSpeciality !== '' && valueEducationalForm !== '') {
-                getAnswers();
+                //getAnswers();
                let t = getSubjects().then(res => {
                 for (const iterator of res) {
                     subject = [...subject, iterator.title];
                 }
                 console.log(subject);
                 if (!document.body.contains(existingElement)) {
-                    createDisciplineSelectBox(subject);
-                    createTeacherSelectBox();
+                    createDisciplineSelectBox();
+                    //createTeacherSelectBox();
                     createButtonSubmit();
                 }
                });
                
                 checkStorage();
+
+                if(subject != ''){
+                    let t = getSubjects().then(res => {
+                        for (const iterator of res) {
+                            lecturer = [...lecturer, iterator.title];
+                        }
+                        console.log(lecturer);
+                        if (!document.body.contains(existingElementLecturer)) {
+                            createDisciplineSelectBox();
+                            createTeacherSelectBox();
+                            createButtonSubmit();
+                        }
+                       });
+                }
             }
         }));
 });
@@ -142,7 +158,6 @@ let createTeacherSelectBox = function f2() {
 
     // Create teacher select box
     let selectTeacher = document.createElement('select');
-    let teachers = ["", "Петруня В.Ю."];
 
     divTeachers.innerHTML = "<label for=\"selectTeacher\">Викладач</label>";
     selectTeacher.className = 'form-control';
@@ -151,10 +166,10 @@ let createTeacherSelectBox = function f2() {
 
     divTeachers.appendChild(selectTeacher);
 
-    for (let i = 0; i < teachers.length; i++) {
+    for (let i = 0; i < lecturer.length; i++) {
         let option = document.createElement('option');
-        option.value = teachers[i];
-        option.text = teachers[i];
+        option.value = lecturer[i];
+        option.text = lecturer[i];
         selectTeacher.appendChild(option);
     }
 }
