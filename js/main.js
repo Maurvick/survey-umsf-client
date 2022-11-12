@@ -17,6 +17,25 @@ function getAnswers() {
 	});
 }
 
+function getSubjects() {
+	let educationLevelSelect = localStorage.getItem("educationLevelSelect");
+	let yearSelect = localStorage.getItem("yearSelect");
+	let educationalFormSelect = localStorage.getItem("educationalFormSelect");
+	let specialitySelect = localStorage.getItem("specialitySelect");
+
+	let url = "http://localhost:8080/survey/subject/getSubjectByParams";
+	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
+		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
+
+	console.log('SendAnswers() is working...');
+
+	// let url = "http://localhost:8080/survey/subject";
+	// let params = '';
+	return sendValuesFetch(url, encodeURI(params), false).then(() => {
+		console.log('The values have been sent...');
+	});
+}
+
 // Send answers to server
 async function sendValuesFetch(url, params, isReload) {
 
@@ -35,6 +54,7 @@ async function sendValuesFetch(url, params, isReload) {
 	});
 
 	let resultText = await response.json();
+
 	console.log(resultText);
 
 	if (resultText.includes("Error update")) {
@@ -55,4 +75,6 @@ async function sendValuesFetch(url, params, isReload) {
 	if (isReload) {
 		location.reload();
 	}
+
+	return resultText;
 }

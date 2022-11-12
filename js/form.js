@@ -11,6 +11,8 @@ const speciality =  [
     "Правоохоронна діяльність", "Соціальне забезпечення", "Інженерія програмного забезпечення",
     "Маркетинг", "Облік i оподаткування", "Політологія", "Культурологія", "Фізична культура"
 ];
+let subject = [];
+const lecturer = [];
 
 if (!localStorage.getItem("educationLevelSelect")) {
     localStorage.setItem("educationLevelSelect",'');
@@ -81,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (valueEducationLevel !== '' && valueYear !== '' &&
                 valueSpeciality !== '' && valueEducationalForm !== '') {
+                getAnswers();
+                subject = getSubjects();
                 createDisciplineSelectBox();
                 createTeacherSelectBox();
                 createButtonSubmit();
@@ -109,10 +113,10 @@ let createDisciplineSelectBox = function f1() {
 
     divDisciplines.appendChild(selectDiscipline);
 
-    for (let i = 0; i < disciplines.length; i++) {
+    for (let i = 0; i < subject.length; i++) {
         let option = document.createElement('option');
-        option.value = disciplines[i];
-        option.text = disciplines[i];
+        option.value = subject[i];
+        option.text = subject[i];
         selectDiscipline.appendChild(option);
     }
 }
@@ -156,7 +160,6 @@ function createButtonSubmit() {
     form.appendChild(buttonSubmit);
 
     form.onsubmit = function() {
-        getAnswers();
         createNewForm();
         console.log("Next page...");
     }
