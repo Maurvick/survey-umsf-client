@@ -70,4 +70,4 @@ async function sendValuesFetch(url, params, isReload) {
 		throw new Error();
 	}
 	return response.json();
-} 
+}
