@@ -88,34 +88,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (valueEducationLevel !== '' && valueYear !== '' &&
                 valueSpeciality !== '' && valueEducationalForm !== '') {
-                //getAnswers();
-               let t = getSubjects().then(res => {
-                for (const iterator of res) {
-                    subject = [...subject, iterator.title];
-                }
-                console.log(subject);
-                if (!document.body.contains(existingElement)) {
-                    createDisciplineSelectBox();
-                    //createTeacherSelectBox();
-                    createButtonSubmit();
-                }
-               });
-               
-                checkStorage();
+                
+                getAnswers();
+                
+                let t = getSubjects().then(res => {
+                    for (const iterator of res) {
+                        subject = [...subject, iterator.title];
+                    }
+                    
+                    console.log(subject);
 
-                if(subject != ''){
-                    let t = getSubjects().then(res => {
-                        for (const iterator of res) {
-                            lecturer = [...lecturer, iterator.title];
-                        }
-                        console.log(lecturer);
-                        if (!document.body.contains(existingElementLecturer)) {
-                            createDisciplineSelectBox();
-                            createTeacherSelectBox();
-                            createButtonSubmit();
-                        }
-                       });
-                }
+                    if (!document.body.contains(existingElement)) {
+                        createDisciplineSelectBox(subject);
+                        createTeacherSelectBox();
+                        createButtonSubmit();
+                        
+
+                }});
+                        
+                checkStorage();
             }
         }));
 });
@@ -158,6 +149,7 @@ let createTeacherSelectBox = function f2() {
 
     // Create teacher select box
     let selectTeacher = document.createElement('select');
+    let teachers = ["", "Петруня В.Ю."];
 
     divTeachers.innerHTML = "<label for=\"selectTeacher\">Викладач</label>";
     selectTeacher.className = 'form-control';
@@ -166,10 +158,10 @@ let createTeacherSelectBox = function f2() {
 
     divTeachers.appendChild(selectTeacher);
 
-    for (let i = 0; i < lecturer.length; i++) {
+    for (let i = 0; i < teachers.length; i++) {
         let option = document.createElement('option');
-        option.value = lecturer[i];
-        option.text = lecturer[i];
+        option.value = teachers[i];
+        option.text = teachers[i];
         selectTeacher.appendChild(option);
     }
 }
