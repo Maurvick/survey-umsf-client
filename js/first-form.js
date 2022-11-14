@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let valueEducationalForm = document.getElementById('educationalFormSelect').value;
             let valueYear = document.getElementById('yearSelect').value;
             let valueSpeciality = document.getElementById('specialitySelect').value;
+            let valueDiscipline = document.getElementById('selectDiscipline');
 
             let existingElement = document.getElementById('selectDiscipline');
             let existingElementLecturer = document.getElementById('selectTeacher');
@@ -107,20 +108,24 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                 checkStorage();
 
-                let y = getLecturers().then(res => {
+                if (!valueDiscipline) {
+                    let y = getLecturers().then(res => {
 
-                    for (const iterator of res) {
-                        lecturer = [...lecturer, iterator.name];
-                    }
-                                  
-                    console.log(lecturer);
+                        for (const iterator of res) {
+                            lecturer = [...lecturer, iterator.title];
+                        }
+                                      
+                        console.log(res);
+    
+                        if (!document.body.contains(existingElementLecturer)) {
+                            createTeacherSelectBox(lecturer);
+                            createButtonSubmit();
+                        }
+                            
+                    });
+                }
 
-                    if (!document.body.contains(existingElementLecturer)) {
-                        createTeacherSelectBox();
-                        createButtonSubmit();
-                    }
-                        
-                });
+               
 
                 checkStorage();
             }
@@ -144,6 +149,8 @@ let createDisciplineSelectBox = function f1() {
     selectDiscipline.className = 'form-control';
     selectDiscipline.setAttribute('id','selectDiscipline');
     selectDiscipline.required = true;
+
+    selectDiscipline = 
 
     divDisciplines.appendChild(selectDiscipline);
 

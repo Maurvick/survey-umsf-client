@@ -38,10 +38,12 @@ async function getLecturers() {
 	let yearSelect = document.getElementById("yearSelect").value;
 	let educationalFormSelect = document.getElementById("educationalFormSelect").value;
 	let specialitySelect = document.getElementById("specialitySelect").value;
+	let selectDiscipline = document.getElementById('selectDiscipline').value;
 
 	let url = "http://localhost:8080/survey/subject/getLecturerByParams";
 	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
-		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
+		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect +
+		"&title=" + selectDiscipline;
 
 	console.log('getLecturers() is working...');
 
