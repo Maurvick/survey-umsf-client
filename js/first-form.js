@@ -2,7 +2,7 @@ const educationLevel = ['', 'Магістр', 'Бакалавр'];
 const years = ['', '2019', '2020', '2021', '2022'];
 const educationalForm = ['', 'Денна', 'Заочна'];
 const speciality =  [
-    "", "Обліково-аналітичне забезпеченн", "Публічне управління або адміністрування",
+    "", "Обліково-аналітичне забезпеченн", "Історія та антропологія права",
     "Туризм", "Кібербезпека", "Право", "Менеджмент", "Журналістика",
     "Економіка", "Історія та археологія", "Міжнародні економічні відносини",
     "Транспортні технології", "Готельно-ресторанна справа", "Комп'ютерні науки",
@@ -14,6 +14,16 @@ const speciality =  [
 let subject = [''];
 let lecturer = [''];
 
+getSubjects().then(res => {
+    subject = [''];
+    for (const iterator of res) {
+        subject = [...subject, iterator.title];
+    }
+                  
+    console.log(subject);
+    createDisciplineSelectBox(subject);
+        
+});
 
 if (!localStorage.getItem("educationLevelSelect")) {
     localStorage.setItem("educationLevelSelect",'');
@@ -32,12 +42,8 @@ if (!localStorage.getItem("specialitySelect")) {
 }
 
 function checkStorage() {
-    if (localStorage.getItem("educationLevelSelect") !== "" &&
-        localStorage.getItem("yearSelect") !== ""  &&
-        localStorage.getItem("educationalFormSelect") !== ""  &&
-        localStorage.getItem("specialitySelect") !== "") {
-    }
-} checkStorage();
+    console.log(educationLevel + years + educationalForm);
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     let educationLevelSelect = document.getElementById('educationLevelSelect');
@@ -81,53 +87,24 @@ document.addEventListener('DOMContentLoaded', function() {
             let valueEducationalForm = document.getElementById('educationalFormSelect').value;
             let valueYear = document.getElementById('yearSelect').value;
             let valueSpeciality = document.getElementById('specialitySelect').value;
-            let valueDiscipline = document.getElementById('selectDiscipline');
-
-            let existingElement = document.getElementById('selectDiscipline');
-            let existingElementLecturer = document.getElementById('selectTeacher');
-
+            let valueDiscipline;
 
             if (valueEducationLevel !== '' && valueYear !== '' &&
                 valueSpeciality !== '' && valueEducationalForm !== '') {
                 
                 getAnswers();
-                
+                console.log("Проверка параметров:");
+                checkStorage();
                 let t = getSubjects().then(res => {
-
+                    subject = [''];
                     for (const iterator of res) {
                         subject = [...subject, iterator.title];
                     }
                                   
                     console.log(subject);
-
-                    if (!document.body.contains(existingElement)) {
-                        createDisciplineSelectBox(subject);
-                    }
+                    createDisciplineSelectBox(subject);
                         
                 });
-                        
-                checkStorage();
-
-                if (!valueDiscipline) {
-                    let y = getLecturers().then(res => {
-
-                        for (const iterator of res) {
-                            lecturer = [...lecturer, iterator.title];
-                        }
-                                      
-                        console.log(res);
-    
-                        if (!document.body.contains(existingElementLecturer)) {
-                            createTeacherSelectBox(lecturer);
-                            createButtonSubmit();
-                        }
-                            
-                    });
-                }
-
-               
-
-                checkStorage();
             }
     }));
         
@@ -136,11 +113,31 @@ document.addEventListener('DOMContentLoaded', function() {
 // New select box render
 let createDisciplineSelectBox = function f1() {
     let form = document.querySelector('form');
+    let existingElement = document.getElementById('selectDiscipline');
+    let existingElementTeacher = document.getElementById('selectTeacher');
+    if(existingElementTeacher){
+        lecturer = [''];
+        createTeacherSelectBox();
+    }
 
     // Create divDisciplines for discipline select box
     let divDisciplines = document.createElement('div');
     divDisciplines.className = 'form-group';
-    form.appendChild(divDisciplines);
+    if(!existingElement){
+        form.appendChild(divDisciplines);
+    }
+    divDisciplines.addEventListener('change',() => {
+        valueDiscipline = document.getElementById('selectDiscipline');
+        let y = getLecturers().then(res => {
+            lecturer = [''];
+            for (const iterator of res) {
+                lecturer = [...lecturer, iterator.lecturer];
+            }
+                          
+            console.log(res);
+            createTeacherSelectBox(lecturer);
+        });
+    });
 
     // Create discipline select box
     let selectDiscipline = document.createElement('select');
@@ -149,10 +146,16 @@ let createDisciplineSelectBox = function f1() {
     selectDiscipline.className = 'form-control';
     selectDiscipline.setAttribute('id','selectDiscipline');
     selectDiscipline.required = true;
-
-    selectDiscipline = 
-
-    divDisciplines.appendChild(selectDiscipline);
+    
+    if(existingElement){
+        selectDiscipline = existingElement;
+        while (selectDiscipline.lastElementChild) {
+            selectDiscipline.removeChild(selectDiscipline.lastElementChild);
+        }
+    }
+    if (!existingElement) {
+        divDisciplines.appendChild(selectDiscipline);
+    }
 
     for (let i = 0; i < subject.length; i++) {
         let option = document.createElement('option');
@@ -165,15 +168,17 @@ let createDisciplineSelectBox = function f1() {
 // New select box render
 let createTeacherSelectBox = function f2() {
     let form = document.querySelector('form');
+    let existingElement = document.getElementById('selectTeacher');
 
     // Create divTeachers for teacher select box
     let divTeachers = document.createElement('div');
     divTeachers.className = 'form-group';
-    form.appendChild(divTeachers);
+    if(!existingElement){
+        form.appendChild(divTeachers);
+    }
 
     // Create teacher select box
     let selectTeacher = document.createElement('select');
-    let teachers = ["", "Петруня В.Ю."];
 
     divTeachers.innerHTML = "<label for=\"selectTeacher\">Викладач</label>";
     selectTeacher.className = 'form-control';
@@ -181,11 +186,20 @@ let createTeacherSelectBox = function f2() {
     selectTeacher.required = true;
 
     divTeachers.appendChild(selectTeacher);
-
-    for (let i = 0; i < teachers.length; i++) {
+    if(existingElement){
+        selectTeacher = existingElement;
+        while (selectTeacher.lastElementChild) {
+            selectTeacher.removeChild(selectTeacher.lastElementChild);
+        }
+    }
+    if (!existingElement) {
+        divTeachers.appendChild(selectTeacher);
+        createButtonSubmit();
+    }
+    for (let i = 0; i < lecturer.length; i++) {
         let option = document.createElement('option');
-        option.value = teachers[i];
-        option.text = teachers[i];
+        option.value = lecturer[i];
+        option.text = lecturer[i];
         selectTeacher.appendChild(option);
     }
 }

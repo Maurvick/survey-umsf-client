@@ -3,6 +3,10 @@ function getAnswers() {
 	let yearSelect = document.getElementById("yearSelect").value;
 	let educationalFormSelect = document.getElementById("educationalFormSelect").value;
 	let specialitySelect = document.getElementById("specialitySelect").value;
+	console.log(educationLevelSelect);
+	console.log(yearSelect);
+	console.log(educationalFormSelect);
+	console.log(specialitySelect);
 
 	let url = "http://localhost:8080/survey/subject/getSubjectByParams";
 	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
@@ -32,6 +36,30 @@ async function getSubjects() {
 	
 	return await sendValuesFetch(url, encodeURI(params), false);
 }
+
+async function getAllEducationLevel() {
+	let url = "http://localhost:8080/survey/subject/getSubjectByParams";
+	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
+		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
+
+	console.log('getSubjects() is working...');
+
+	
+	return await sendValuesFetch(url, encodeURI(params), false);
+}
+
+async function getAllYear() {
+	
+}
+
+async function getAllEducationalForm() {
+	
+}
+
+async function getAllSpeciality() {
+	
+}
+
 
 async function getLecturers() {
 	let educationLevelSelect = document.getElementById("educationLevelSelect").value;
