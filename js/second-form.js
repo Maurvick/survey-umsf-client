@@ -1,5 +1,6 @@
-// Create teacher form
-function createNewForm() {
+// Create lecturer evaluation form
+function createLecturerForm() {
+    
     // Delete form
     let pageElement = document.querySelector('form');
 
@@ -8,7 +9,6 @@ function createNewForm() {
     }
 
     // Create new form
-    // let main = document.getElementsByTagName('main')[0];
     let main = document.querySelector('main');
     let form = document.createElement('form');
     let horizontalRule = document.createElement('hr');
@@ -18,17 +18,16 @@ function createNewForm() {
 
     // Create headingScore
     let headingScore = document.createElement('h2');
-    // let horizontalRuleScore = document.createElement('hr');
     headingScore.innerText = "Оцініть характеристики викладача";
 
     form.append(headingScore);
     form.appendChild(horizontalRule);
     form.appendChild(breakText);
-    // form.appendChild(horizontalRuleScore);
 
     // Create divCompetence for competence select box
     let divCompetence = document.createElement('div');
     divCompetence.className = 'form-group';
+    
     form.appendChild(divCompetence);
 
     // Create competence select box
@@ -55,10 +54,12 @@ function createNewForm() {
     // Create divUnderstandability for understandability select box
     let divUnderstandability = document.createElement('div');
     divUnderstandability.className = 'form-group';
+    
     form.appendChild(divUnderstandability);
 
     // Create understandability select box
     let selectUnderstandability = document.createElement('select');
+    
     divUnderstandability.innerHTML = "<label for=\"selectUnderstandability\">" +
         "2. Викладає матеріал логічно та зрозуміло</label>";
     selectUnderstandability.className = 'form-control';
@@ -77,10 +78,12 @@ function createNewForm() {
     // Create divPracticality for Practicality select box
     let divPracticality = document.createElement('div');
     divPracticality .className = 'form-group';
+    
     form.appendChild(divPracticality);
 
     // Create Practicality select box
     let selectPracticality = document.createElement('select');
+    
     divPracticality.innerHTML = "<label for=\"selectPracticality\">" +
         "3. Викладач достатньо використовує практичні приклади під час занять</label>";
     selectPracticality.className = 'form-control';
@@ -99,10 +102,12 @@ function createNewForm() {
     // Create divTools for tools select box
     let divTools = document.createElement('div');
     divTools .className = 'form-group';
+    
     form.appendChild(divTools);
 
     // Create tools select box
     let selectTools = document.createElement('select');
+    
     divTools.innerHTML = "<label for=\"selectTools\">" +
         "4. Викладач використовує мультимедійні засоби навчання (презентації, електронні лекції тощо)</label>";
     selectTools.className = 'form-control';
@@ -121,10 +126,12 @@ function createNewForm() {
     // Create divCommunication for communication select box
     let divCommunication = document.createElement('div');
     divCommunication .className = 'form-group';
+    
     form.appendChild(divCommunication);
 
     // Create communication select box
     let selectCommunication = document.createElement('select');
+    
     divCommunication.innerHTML = "<label for=\"selectCommunication\">" +
         "5. Викладач налагоджує партнерські стосунки зі студентами, підтримує зворотній зв'язок</label>";
     selectCommunication.className = 'form-control';
@@ -143,10 +150,12 @@ function createNewForm() {
     // Create divInformativeness for Informativeness select box
     let divInformativeness = document.createElement('div');
     divInformativeness .className = 'form-group';
+    
     form.appendChild(divInformativeness);
 
     // Create Informativeness select box
     let selectInformativeness = document.createElement('select');
+    
     divInformativeness.innerHTML = "<label for=\"selectInformativeness\">" +
         "6. Викладач на початку семестру інформує про форми контролю</label>";
     selectInformativeness.className = 'form-control';
@@ -165,10 +174,12 @@ function createNewForm() {
     // Create divObjectivity for Objectivity select box
     let divObjectivity = document.createElement('div');
     divObjectivity .className = 'form-group';
+    
     form.appendChild(divObjectivity);
 
     // Create Objectivity select box
     let selectObjectivity = document.createElement('select');
+    
     divObjectivity.innerHTML = "<label for=\"selectObjectivity\">" +
         "7. Викладач об'єктивно оцінює знання студентів</label>";
     selectObjectivity.className = 'form-control';
@@ -187,10 +198,12 @@ function createNewForm() {
     // Create divClassroom for Classroom select box
     let divClassroom = document.createElement('div');
     divClassroom .className = 'form-group';
+    
     form.appendChild(divClassroom);
 
     // Create Classroom select box
     let selectClassroom = document.createElement('select');
+    
     divClassroom.innerHTML = "<label for=\"selectClassroom\">" +
         "8. Викладач забезпечує студентів навчальними матеріалами на платформі Google Classroom</label>";
     selectClassroom.className = 'form-control';
@@ -209,13 +222,16 @@ function createNewForm() {
     // Create divConferences for Conferences select box
     let divConferences = document.createElement('div');
     divConferences.className = 'form-group';
+    
     form.appendChild(divConferences);
 
     // Create Conferences select box
     let selectConferences = document.createElement('select');
+    
     divConferences.innerHTML = "<label for=\"selectConferences\">" +
         "9. Викладач проводить заняття за розкладом з використанням Zoom, Meet, Skype " +
         "чи інших програм для онлайн-конференцій</label>";
+    
     selectConferences.className = 'form-control';
     selectConferences.setAttribute('id','selectConferences');
     selectConferences.required = true;
@@ -232,12 +248,15 @@ function createNewForm() {
     // Create divFriendliness for Friendliness select box
     let divFriendliness = document.createElement('div');
     divFriendliness .className = 'form-group';
+    
     form.appendChild(divFriendliness);
 
     // Create Friendliness select box
     let selectFriendliness = document.createElement('select');
+    
     divFriendliness.innerHTML = "<label for=\"selectFriendliness\">" +
         "10. Викладач тактовний і доброзичливий зі студентами</label>";
+    
     selectFriendliness.className = 'form-control';
     selectFriendliness.setAttribute('id','selectFriendliness');
     selectFriendliness.required = true;
@@ -254,12 +273,15 @@ function createNewForm() {
     // Create divPreferences for Preferences select box
     let divPreferences = document.createElement('div');
     divPreferences .className = 'form-group';
+    
     form.appendChild(divPreferences);
 
     // Create Preferences select box
     let selectPreferences = document.createElement('select');
+
     divPreferences.innerHTML = "<label for=\"selectPreferences\">" +
         "11. Хотів(-ла) б вивчати інші дисципліни саме з цим викладачем</label>";
+    
     selectPreferences.className = 'form-control';
     selectPreferences.setAttribute('id','selectPreferences');
     selectPreferences.required = true;
@@ -276,28 +298,33 @@ function createNewForm() {
     // Create divTextArea for textAreaComment
     let divComment = document.createElement('div');
     divComment.className = 'form-group';
+    
     form.appendChild(divComment);
 
     // Create textAreaComment
     let textAreaComment = document.createElement('textarea');
+
     divComment.innerHTML = "<label for=\"comment\">" +
         "12. Ваші побажання щодо покращення викладання цієї дисципліни</label>";
+    
     textAreaComment.className = 'form-control';
     textAreaComment.setAttribute('id','comment');
     textAreaComment.setAttribute('name','comment');
     textAreaComment.setAttribute('rows','5');
     textAreaComment.setAttribute('cols','33');
     textAreaComment.required = true;
+
     divComment.appendChild(textAreaComment);
 
     // Create submit button
     let buttonSubmit = document.createElement('button');
+    
     buttonSubmit.className = 'btn btn-primary btn-lg btn-block';
     buttonSubmit.setAttribute('type','submit');
     buttonSubmit.innerText = "Відправити";
+    
     form.appendChild(buttonSubmit);
 
-    form.onsubmit = function() {
-        stats();
-    }
+    // On click create new survey-result form
+    form.onsubmit = function() { stats(); }
 }
