@@ -165,7 +165,7 @@ let createDisciplineSelectBox = function f1() {
         option.text = subject[i];
         selectDiscipline.appendChild(option);
     }
-}
+};
 
 let createTeacherSelectBox = function f2() {
     
@@ -211,7 +211,7 @@ let createTeacherSelectBox = function f2() {
         option.text = lecturer[i];
         selectTeacher.appendChild(option);
     }
-}
+};
 
 function createButtonSubmit() {
 
@@ -227,5 +227,5 @@ function createButtonSubmit() {
 
     form.onsubmit = function() {
         createLecturerForm();
-    }
+    };
 }

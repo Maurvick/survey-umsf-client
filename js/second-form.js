@@ -5,7 +5,7 @@ function createLecturerForm() {
     let pageElement = document.querySelector('form');
 
     if (document.querySelector('form')) {
-        pageElement.remove()
+        pageElement.remove();
     }
 
     // Create new form
@@ -326,5 +326,7 @@ function createLecturerForm() {
     form.appendChild(buttonSubmit);
 
     // On click create new survey-result form
-    form.onsubmit = function() { stats(); }
+    form.onsubmit = function() { 
+        stats(); 
+    };
 }
