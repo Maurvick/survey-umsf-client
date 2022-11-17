@@ -20,3 +20,11 @@ h1, h2, h3, h4, h5, h6 {
 p {
     text-align: justify;
 }
+
+table {
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 64px auto;
+    min-width: 368px; width: 70%; max-width: 896px;
+    background-color: #fff;
+}
