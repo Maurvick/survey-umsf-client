@@ -40,7 +40,7 @@ function createLecturerForm() {
         "1. Викладач компетентний у дисципліні та вільно володіє теоретичним матеріалом</label>";
     selectCompetence.className = 'form-control';
     selectCompetence.setAttribute('id','selectCompetence');
-    selectCompetence.required = true;
+    selectCompetence.required = false;
 
     divCompetence.appendChild(selectCompetence);
 
@@ -64,7 +64,7 @@ function createLecturerForm() {
         "2. Викладає матеріал логічно та зрозуміло</label>";
     selectUnderstandability.className = 'form-control';
     selectUnderstandability.setAttribute('id','selectUnderstandability');
-    selectUnderstandability.required = true;
+    selectUnderstandability.required = false;
 
     divUnderstandability.appendChild(selectUnderstandability);
 
@@ -88,7 +88,7 @@ function createLecturerForm() {
         "3. Викладач достатньо використовує практичні приклади під час занять</label>";
     selectPracticality.className = 'form-control';
     selectPracticality.setAttribute('id','selectPracticality');
-    selectPracticality.required = true;
+    selectPracticality.required = false;
 
     divPracticality.appendChild(selectPracticality);
 
@@ -112,7 +112,7 @@ function createLecturerForm() {
         "4. Викладач використовує мультимедійні засоби навчання (презентації, електронні лекції тощо)</label>";
     selectTools.className = 'form-control';
     selectTools.setAttribute('id','selectTools');
-    selectTools.required = true;
+    selectTools.required = false;
 
     divTools.appendChild(selectTools);
 
@@ -136,7 +136,7 @@ function createLecturerForm() {
         "5. Викладач налагоджує партнерські стосунки зі студентами, підтримує зворотній зв'язок</label>";
     selectCommunication.className = 'form-control';
     selectCommunication.setAttribute('id','selectCommunication');
-    selectCommunication.required = true;
+    selectCommunication.required = false;
 
     divCommunication.appendChild(selectCommunication);
 
@@ -160,7 +160,7 @@ function createLecturerForm() {
         "6. Викладач на початку семестру інформує про форми контролю</label>";
     selectInformativeness.className = 'form-control';
     selectInformativeness.setAttribute('id','selectInformativeness');
-    selectInformativeness.required = true;
+    selectInformativeness.required = false;
 
     divInformativeness.appendChild(selectInformativeness);
 
@@ -184,7 +184,7 @@ function createLecturerForm() {
         "7. Викладач об'єктивно оцінює знання студентів</label>";
     selectObjectivity.className = 'form-control';
     selectObjectivity.setAttribute('id','selectObjectivity');
-    selectObjectivity.required = true;
+    selectObjectivity.required = false;
 
     divObjectivity.appendChild(selectObjectivity);
 
@@ -208,7 +208,7 @@ function createLecturerForm() {
         "8. Викладач забезпечує студентів навчальними матеріалами на платформі Google Classroom</label>";
     selectClassroom.className = 'form-control';
     selectClassroom.setAttribute('id','selectClassroom');
-    selectClassroom.required = true;
+    selectClassroom.required = false;
 
     divClassroom.appendChild(selectClassroom);
 
@@ -234,7 +234,7 @@ function createLecturerForm() {
     
     selectConferences.className = 'form-control';
     selectConferences.setAttribute('id','selectConferences');
-    selectConferences.required = true;
+    selectConferences.required = false;
 
     divConferences.appendChild(selectConferences);
 
@@ -259,7 +259,7 @@ function createLecturerForm() {
     
     selectFriendliness.className = 'form-control';
     selectFriendliness.setAttribute('id','selectFriendliness');
-    selectFriendliness.required = true;
+    selectFriendliness.required = false;
 
     divFriendliness.appendChild(selectFriendliness);
 
@@ -284,7 +284,7 @@ function createLecturerForm() {
     
     selectPreferences.className = 'form-control';
     selectPreferences.setAttribute('id','selectPreferences');
-    selectPreferences.required = true;
+    selectPreferences.required = false;
 
     divPreferences.appendChild(selectPreferences);
 
@@ -312,7 +312,7 @@ function createLecturerForm() {
     textAreaComment.setAttribute('name','comment');
     textAreaComment.setAttribute('rows','5');
     textAreaComment.setAttribute('cols','33');
-    textAreaComment.required = true;
+    textAreaComment.required = false;
 
     divComment.appendChild(textAreaComment);
 
@@ -326,7 +326,15 @@ function createLecturerForm() {
     form.appendChild(buttonSubmit);
 
     // On click create new survey-result form
-    form.onsubmit = function() { 
-        stats(); 
+    form.onsubmit = function() {
+        //stats();
+        let selectTeacher = localStorage.getItem("teacherSelect");
+        let teachers = [];
+        if(!localStorage.getItem("educationLevelSelect")){
+            teachers = JSON.parse(localStorage.getItem("passedTeacher"))
+        }
+        teachers.push(selectTeacher);
+        alert(teachers.length);
+        location.reload();
     };
 }

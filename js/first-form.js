@@ -1,18 +1,18 @@
-const educationLevel = ['', 'Магістр', 'Бакалавр'];
-const years = ['', '2019', '2020', '2021', '2022'];
-const educationalForm = ['', 'Денна', 'Заочна'];
-const speciality =  [
-    "", "Обліково-аналітичне забезпеченн", "Історія та антропологія права",
-    "Туризм", "Кібербезпека", "Право", "Менеджмент", "Журналістика",
-    "Економіка", "Історія та археологія", "Міжнародні економічні відносини",
-    "Транспортні технології", "Готельно-ресторанна справа", "Комп'ютерні науки",
-    "Підприємництво, торгівля та біржова діяльність", "Фінанси, банківська справа та страхування",
-    "Психологія", "Філологія", "Дизайн", "Міжнародні відносини, суспільні комунікації та регіональні студії",
-    "Правоохоронна діяльність", "Соціальне забезпечення", "Інженерія програмного забезпечення",
-    "Маркетинг", "Облік i оподаткування", "Політологія", "Культурологія", "Фізична культура"
-];
+let educationLevel = [''];
+let years =  [''];
+let educationalForm = [''];
+let speciality =  [''];
 let subject = [''];
 let lecturer = [''];
+
+// function f_aw(){ getAllEducationLevel().then(res => {
+//     educationLevel = [''];
+//     for (const iterator of res) {
+//         educationLevel = [...educationLevel, iterator.education_level];
+//     }
+//     console.log("await...");
+// })
+// };
 
 // Save answers after reloading page
 if (!localStorage.getItem("educationLevelSelect")) {
@@ -31,78 +31,138 @@ if (!localStorage.getItem("specialitySelect")) {
     localStorage.setItem("specialitySelect",'');
 }
 
-function checkStorage() {
-    console.log(educationLevel + years + educationalForm);
+if (!localStorage.getItem("teacherSelect")) {
+    localStorage.setItem("teacherSelect",'');
 }
 
-// Add options to first 4 select boxes
-document.addEventListener('DOMContentLoaded', function() {
-    
-    let educationLevelSelect = document.getElementById('educationLevelSelect');
-    let yearSelect = document.getElementById('yearSelect');
-    let educationalFormSelect = document.getElementById('educationalFormSelect');
-    let selectSpeciality = document.getElementById('specialitySelect');
+function checkStorage(){
+    console.log("Сейчас обрабатывается рендер educationLevelSelect--" 
+    + localStorage.getItem("educationLevelSelect") + " yearSelect--" 
+    + localStorage.getItem("yearSelect") + " educationalFormSelect--" 
+    + localStorage.getItem("educationalFormSelect") + " specialitySelect--"
+    + localStorage.getItem("specialitySelect"));
+}
 
+let sectors = document.querySelectorAll('.form-group');
+console.log(sectors);
+sectors.forEach((e) => e.addEventListener('change',(event) => {
+    element_id = e.querySelector('select').id;
+    if(!localStorage.getItem(localStorage)){
+        localStorage.setItem(element_id, event.target.value);
+    }
+    checkStorage();
+    console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
+}));
+
+function educationLevelFill(){
+    let educationLevelSelect = document.getElementById('educationLevelSelect');
+    educationLevel = [''];
+    temp = getAllEducationLevel().then(res => {
+    for (const iterator of res) {
+        educationLevel = [...educationLevel, iterator.educationLevel];
+    }
     for (let i = 0; i < educationLevel.length; i++) {
         let option = document.createElement('option');
         option.value = educationLevel[i];
         option.text = educationLevel[i];
         educationLevelSelect.appendChild(option);
     }
+    console.log(localStorage.getItem("educationLevelSelect"));
+    if(localStorage.getItem("educationLevelSelect")){
+        educationLevelSelect.value = localStorage.getItem("educationLevelSelect");
+    }});
+}
 
+function yearFill(){
+    let yearSelect = document.getElementById('yearSelect');
+    years = [''];
+    temp = getAllYear().then(res => {
+    for (const iterator of res) {
+        years = [...years, iterator.year];
+    }
     for (let i = 0; i < years.length; i++) {
         let option = document.createElement('option');
         option.value = years[i];
         option.text = years[i];
         yearSelect.appendChild(option);
     }
+    if(localStorage.getItem("yearSelect")){
+        yearSelect.value = localStorage.getItem("yearSelect");
+    }});
+    
+}
 
+function educationFormFill(){
+    let educationalFormSelect = document.getElementById('educationalFormSelect');
+    educationalForm = [''];
+    temp = getAllEducationalForm().then(res => {
+    for (const iterator of res) {
+        educationalForm = [...educationalForm, iterator.educationalForm];
+    }
     for (let i = 0; i < educationalForm.length; i++) {
         let option = document.createElement('option');
         option.value = educationalForm[i];
         option.text = educationalForm[i];
         educationalFormSelect.appendChild(option);
     }
+    if(localStorage.getItem("educationalFormSelect")){
+        educationalFormSelect.value = localStorage.getItem("educationalFormSelect");
+    }});
+    
+}
 
+function specialityFill(){
+    let selectSpeciality = document.getElementById('specialitySelect');
+    speciality = [''];
+    temp = getAllSpeciality().then(res => {
+    for (const iterator of res) {
+        speciality = [...speciality, iterator.speciality];
+    }
     for (let i = 0; i < speciality.length; i++) {
         let option = document.createElement('option');
         option.value = speciality[i];
         option.text = speciality[i];
         selectSpeciality.appendChild(option);
     }
-
+    if(localStorage.getItem("specialitySelect")){
+        selectSpeciality.value = localStorage.getItem("specialitySelect");
+    }});
+}
+paramsCheack();
+// Add options to first 4 select boxes
+document.addEventListener('DOMContentLoaded', function() {
+    educationLevelFill();
+    yearFill();
+    educationFormFill();
+    specialityFill();
+    
     // Add discipline select box when all questions answered
     document.querySelectorAll('.form-group').forEach((e) =>
         e.addEventListener('change',() => {
-
-            let valueEducationLevel = document.getElementById('educationLevelSelect').value;
-            let valueEducationalForm = document.getElementById('educationalFormSelect').value;
-            let valueYear = document.getElementById('yearSelect').value;
-            let valueSpeciality = document.getElementById('specialitySelect').value;
-
-            if (valueEducationLevel !== '' && valueYear !== '' &&
-                valueSpeciality !== '' && valueEducationalForm !== '') {
-                
-                getAnswers();
-                
-                console.log("Checking entered values...");
-                
-                checkStorage();
-                
-                let t = getSubjects().then(res => {
-                    subject = [''];
-                    for (const iterator of res) {
-                        subject = [...subject, iterator.title];
-                    }
-                                  
-                    console.log(subject);
-                    createDisciplineSelectBox(subject);
-                        
-                });
-            }
+            paramsCheack();
     }));
         
 });
+
+function paramsCheack() {
+    if (localStorage.getItem("educationLevelSelect") != "" && localStorage.getItem("yearSelect") != ""  && localStorage.getItem("educationalFormSelect") != ""  && localStorage.getItem("specialitySelect") != "") {
+                
+        //getAnswers();
+        
+        console.log("Checking entered values...");
+        
+        let t = getSubjects().then(res => {
+            subject = [''];
+            for (const iterator of res) {
+                subject = [...subject, iterator.title];
+            }
+                          
+            console.log(subject);
+            createDisciplineSelectBox(subject);
+                
+        });
+    }
+}
 
 let createDisciplineSelectBox = function f1() {
     let form = document.querySelector('form');
@@ -189,6 +249,13 @@ let createTeacherSelectBox = function f2() {
     selectTeacher.setAttribute('id','selectTeacher');
     selectTeacher.required = true;
 
+    divTeachers.addEventListener('change', () => {
+        valueTeacher = document.getElementById('selectTeacher');
+        
+        localStorage.setItem('teacherSelect',valueTeacher.value)
+        console.log(localStorage.getItem('teacherSelect'));
+    });
+
     divTeachers.appendChild(selectTeacher);
     
     // Check if select box is exist
@@ -209,9 +276,25 @@ let createTeacherSelectBox = function f2() {
         let option = document.createElement('option');
         option.value = lecturer[i];
         option.text = lecturer[i];
-        selectTeacher.appendChild(option);
+        if(!checkPassedTeacher(lecturer[i])){
+            selectTeacher.appendChild(option);
+        }
     }
 };
+
+function checkPassedTeacher(teacter){
+    teachers = JSON.parse(localStorage.getItem("passedTeacher"));
+    if(!teachers || teacters.length == 0){
+        return false;
+    }
+    for (let index = 0; index < teachers.length; index++) {
+        const element = teachers[index];
+        if(element === teacter){
+            return false;
+        }
+    }
+    return true;
+}
 
 function createButtonSubmit() {
 
