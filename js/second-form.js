@@ -272,7 +272,7 @@ function createLecturerForm() {
 
     // Create divPreferences for Preferences select box
     let divPreferences = document.createElement('div');
-    divPreferences .className = 'form-group';
+    divPreferences.className = 'form-group';
     
     form.appendChild(divPreferences);
 
@@ -330,9 +330,11 @@ function createLecturerForm() {
         //stats();
         let selectTeacher = localStorage.getItem("teacherSelect");
         let teachers = [];
-        if(!localStorage.getItem("educationLevelSelect")){
-            teachers = JSON.parse(localStorage.getItem("passedTeacher"))
+        
+        if (!localStorage.getItem("educationLevelSelect")) {
+            teachers = JSON.parse(localStorage.getItem("passedTeacher"));
         }
+
         teachers.push(selectTeacher);
         alert(teachers.length);
         location.reload();

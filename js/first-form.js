@@ -35,12 +35,13 @@ if (!localStorage.getItem("teacherSelect")) {
     localStorage.setItem("teacherSelect",'');
 }
 
-function checkStorage(){
-    console.log("Сейчас обрабатывается рендер educationLevelSelect--" 
-    + localStorage.getItem("educationLevelSelect") + " yearSelect--" 
-    + localStorage.getItem("yearSelect") + " educationalFormSelect--" 
-    + localStorage.getItem("educationalFormSelect") + " specialitySelect--"
-    + localStorage.getItem("specialitySelect"));
+function checkStorage() {
+
+    console.log("Сейчас обрабатывается рендер educationLevelSelect--" +
+    localStorage.getItem("educationLevelSelect") + " yearSelect--" +
+    localStorage.getItem("yearSelect") + " educationalFormSelect--" +
+    localStorage.getItem("educationalFormSelect") + " specialitySelect--"  +
+    localStorage.getItem("specialitySelect"));
 }
 
 let sectors = document.querySelectorAll('.form-group');
@@ -252,7 +253,7 @@ let createTeacherSelectBox = function f2() {
     divTeachers.addEventListener('change', () => {
         valueTeacher = document.getElementById('selectTeacher');
         
-        localStorage.setItem('teacherSelect',valueTeacher.value)
+        localStorage.setItem('teacherSelect',valueTeacher.value);
         console.log(localStorage.getItem('teacherSelect'));
     });
 
