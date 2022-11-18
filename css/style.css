@@ -22,9 +22,8 @@ p {
 }
 
 table {
-    box-sizing: border-box;
-    overflow: hidden;
     margin: 64px auto;
-    min-width: 368px; width: 70%; max-width: 896px;
+    max-width: 700px;
     background-color: #fff;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
