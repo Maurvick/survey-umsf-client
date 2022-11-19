@@ -2,14 +2,10 @@ let statSpeciality = ['', '1', '2', '3', '4', '5'];
 let statDiscipline = ['', '1', '2', '3', '4', '5'];
 let statLecturer = ['', '1', '2', '3', '4', '5'];
 let lecturerScores =  [
-    "", "Обліково-аналітичне забезпеченн", "Історія та антропологія права",
-    "Туризм", "Кібербезпека", "Право", "Менеджмент", "Журналістика",
-    "Економіка", "Історія та археологія", "Міжнародні економічні відносини",
-    "Транспортні технології", "Готельно-ресторанна справа", "Комп'ютерні науки",
-    "Підприємництво, торгівля та біржова діяльність", "Фінанси, банківська справа та страхування",
-    "Психологія", "Філологія", "Дизайн", "Міжнародні відносини, суспільні комунікації та регіональні студії",
-    "Правоохоронна діяльність", "Соціальне забезпечення", "Інженерія програмного забезпечення",
-    "Маркетинг", "Облік i оподаткування", "Політологія", "Культурологія", "Фізична культура"
+    '1', '2', '3', 
+    '4', '5', '6',
+    '7', '8', '9',
+    '10', '11', '12'
 ];
 
 // Survey results
@@ -230,35 +226,24 @@ function createStatTable() {
 
     // Creating and adding data to second row of the table
     let row_2 = document.createElement('tr');
-    row_2.id = 'row_0';
+    row_2.id = 'row_1';
     
     let row_2_data_1 = document.createElement('td');
+    row_2_data_1.id = "cell_0";
     row_2_data_1.innerHTML = "";
 
     row_2.appendChild(row_2_data_1);
     tbody.appendChild(row_2);
 
     // Insert data rows
-    row_nr = 0;
-    col_nr = 1;
-
-    let isExist = document.getElementById('row_1');
+    let row = document.getElementById("row_1");
     
     for (let i = 0; i < lecturerScores.length; i++) {
-        
-        let tableRows = document.querySelector("table");
-        // row id must be row_0
-        let row = document.getElementById("row_" + row_nr);
-        let cell = row.insertCell(col_nr);
-        
-        cell.innerHTML = row_nr + "," + col_nr;
-        col_nr++;
-        
-        if (col_nr % 3 == 0) {
-        col_nr = 0;
-        row_nr++;
-        row = tableRows.insertRow(row_nr);
-        row.setAttribute("id", "row_" + row_nr);
-        }
+        let cell = row.insertCell(lecturerScores[i]);
+        cell.innerHTML = lecturerScores[i];
+        cell.setAttribute("id", "cell_" + (i + 1));
     }
+
+    /// Delete empty cell
+    document.getElementById("cell_0").remove();
 }
