@@ -5,33 +5,39 @@ let lecturerScores =  [
     'Петруня', '2', '3', 
     '4', '5', '6',
     '7', '8', '9',
-    '10', '11', '12'
+    '10', '11', '12',
 ];
 let avgScores =  [
     '', '1', '2', 
     '3', '4', '5',
     '6', '7', '8',
-    '9', '10', '11'
+    '9', '10', '11',
 ];
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Load speciality options
+    let selectSpeciality = document.getElementById('specialitySelect');
+    let speciality = [''];
+    
+    temp = getAllSpeciality().then(res => {
+        for (const iterator of res) {
+            speciality = [...speciality, iterator.speciality];
+        }
+        for (let i = 0; i < speciality.length; i++) {
+            let option = document.createElement('option');
+            option.value = speciality[i];
+            option.text = speciality[i];
+            selectSpeciality.appendChild(option);
+        }
+    });
+    // Load discipline options
+
+    // Load lecturer options
+    
+});
 
 // Survey results
 function stats() {
-
-    // Delete form
-    document.querySelector('form').remove();
-
-    // Create new form
-    let form = document.createElement('form');
-
-    form.innerHTML = '<h2>Статистика</h2>';
-
-    document.querySelector('main').appendChild(form);
-
-    createStatSpecialitySelectBox();
-    createStatDisciplineSelectBox();
-    createStatLecturerSelectBox();
-    createStatButtonSubmit();
-
     document.querySelectorAll('.form-group').forEach((e) =>
         e.addEventListener('change',() => {
 
@@ -177,70 +183,70 @@ function createStatTable() {
         document.querySelector('main').appendChild(table);
     }
     
-  // Creating and adding data to first row of the table
-  let row_1 = document.createElement('tr');
+    // Creating and adding data to first row of the table
+    let row_1 = document.createElement('tr');
+        
+    let heading_1 = document.createElement('th');
+    heading_1.innerHTML = "Викладач";
     
-  let heading_1 = document.createElement('th');
-  heading_1.innerHTML = "Викладач";
-  
-  let heading_2 = document.createElement('th');
-  heading_2.innerHTML = "Компетентність";
-  
-  let heading_3 = document.createElement('th');
-  heading_3.innerHTML = "Зрозумілість";
+    let heading_2 = document.createElement('th');
+    heading_2.innerHTML = "Компетентність";
+    
+    let heading_3 = document.createElement('th');
+    heading_3.innerHTML = "Зрозумілість";
 
-  let heading_4 = document.createElement('th');
-  heading_4.innerHTML = "Практичність";
+    let heading_4 = document.createElement('th');
+    heading_4.innerHTML = "Практичність";
 
-  let heading_5 = document.createElement('th');
-  heading_5.innerHTML = "Мультимедіа";
+    let heading_5 = document.createElement('th');
+    heading_5.innerHTML = "Мультимедіа";
 
-  let heading_6 = document.createElement('th');
-  heading_6.innerHTML = "Комунікативність";
+    let heading_6 = document.createElement('th');
+    heading_6.innerHTML = "Комунікативність";
 
-  let heading_7 = document.createElement('th');
-  heading_7.innerHTML = "Інформативність";
+    let heading_7 = document.createElement('th');
+    heading_7.innerHTML = "Інформативність";
 
-  let heading_8 = document.createElement('th');
-  heading_8.innerHTML = "Об'єктивність";
+    let heading_8 = document.createElement('th');
+    heading_8.innerHTML = "Об'єктивність";
 
-  let heading_9 = document.createElement('th');
-  heading_9.innerHTML = "Гугл класс";
+    let heading_9 = document.createElement('th');
+    heading_9.innerHTML = "Гугл класс";
 
-  let heading_10 = document.createElement('th');
-  heading_10.innerHTML = "Конференції";
+    let heading_10 = document.createElement('th');
+    heading_10.innerHTML = "Конференції";
 
-  let heading_11 = document.createElement('th');
-  heading_11.innerHTML = "Уподобання";
+    let heading_11 = document.createElement('th');
+    heading_11.innerHTML = "Уподобання";
 
-  let heading_12 = document.createElement('th');
-  heading_12.innerHTML = "Середня оцінка";
+    let heading_12 = document.createElement('th');
+    heading_12.innerHTML = "Середня оцінка";
 
-  row_1.appendChild(heading_1);
-  row_1.appendChild(heading_2);
-  row_1.appendChild(heading_3);
-  row_1.appendChild(heading_4);
-  row_1.appendChild(heading_5);
-  row_1.appendChild(heading_6);
-  row_1.appendChild(heading_7);
-  row_1.appendChild(heading_8);
-  row_1.appendChild(heading_9);
-  row_1.appendChild(heading_10);
-  row_1.appendChild(heading_11);
-  row_1.appendChild(heading_12);
-  thead.appendChild(row_1);
+    row_1.appendChild(heading_1);
+    row_1.appendChild(heading_2);
+    row_1.appendChild(heading_3);
+    row_1.appendChild(heading_4);
+    row_1.appendChild(heading_5);
+    row_1.appendChild(heading_6);
+    row_1.appendChild(heading_7);
+    row_1.appendChild(heading_8);
+    row_1.appendChild(heading_9);
+    row_1.appendChild(heading_10);
+    row_1.appendChild(heading_11);
+    row_1.appendChild(heading_12);
+    thead.appendChild(row_1);
 
     // Creating and adding data to second row of the table
     let row_2 = document.createElement('tr');
     row_2.id = 'row_2';
-    
+
     let row_2_data_1 = document.createElement('td');
     row_2_data_1.id = "row_2_cell_0";
 
     row_2.appendChild(row_2_data_1);
     tbody.appendChild(row_2);
 
-    
+
     for (let i = 0; i < lecturerScores.length; i++) {
         let cell = row_2.insertCell(lecturerScores[i]);
         cell.innerHTML = lecturerScores[i];
@@ -259,12 +265,13 @@ function createStatTable() {
 
     row_3.appendChild(row_3_data_1);
     tbody.appendChild(row_3);
-    
+
     for (let i = 0; i < avgScores.length; i++) {
         let cell = row_3.insertCell(avgScores[i]);
         cell.innerHTML = avgScores[i];
         cell.setAttribute("id", "row_3_cell_" + (i + 1));
         cell.setAttribute("scope", "row");
+        cell.className = 'bg-warning';
     }
 
     document.getElementById("row_3_cell_0").remove();
