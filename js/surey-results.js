@@ -1,25 +1,25 @@
-let statSpeciality = ['', '1', '2', '3', '4', '5'];
-let statDiscipline = ['', '1', '2', '3', '4', '5'];
-let statLecturer = ['', '1', '2', '3', '4', '5'];
+let speciality = [''];
+let discipline = [''];
+let lecturer = [''];
 let lecturerScores =  [
     'Петруня', '2', '3', 
     '4', '5', '6',
     '7', '8', '9',
-    '10', '11', '12',
+    '10', '11', '12'
 ];
 let avgScores =  [
     '', '1', '2', 
     '3', '4', '5',
     '6', '7', '8',
-    '9', '10', '11',
+    '9', '10', '11'
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
     // Load speciality options
     let selectSpeciality = document.getElementById('specialitySelect');
-    let speciality = [''];
+    speciality = [''];
     
-    temp = getAllSpeciality().then(res => {
+    getAllSpeciality().then(res => {
         for (const iterator of res) {
             speciality = [...speciality, iterator.speciality];
         }
@@ -30,20 +30,69 @@ document.addEventListener('DOMContentLoaded', () => {
             selectSpeciality.appendChild(option);
         }
     });
-    // Load discipline options
 
-    // Load lecturer options
+    let selectDiscipline = document.getElementById('selectDiscipline');
+    let selectTeacher = document.getElementById('selectTeacher');
+
+    selectSpeciality.addEventListener('change',(event) => {
+        discipline = [''];
+        selectDiscipline.innerHTML = '';
+        selectTeacher.innerHTML = '';
     
+        getSubjectsStats().then(res => {
+            subject = [''];
+            for (const iterator of res) {
+                subject = [...subject, iterator.title];
+            }
+            for (let i = 0; i < subject.length; i++) {
+                let option = document.createElement('option');
+                option.value = subject[i];
+                option.text = subject[i];
+                selectDiscipline.appendChild(option);
+            }
+        });
+    });
+
+    
+    selectDiscipline.addEventListener('change',(event) => {
+        lecturer = [''];
+        selectTeacher.innerHTML = '';
+    
+        getLecturersStats().then(res => {
+            for (const iterator of res) {
+                lecturer = [...lecturer, iterator.lecturer];
+            }
+            for (let i = 0; i < lecturer.length; i++) {
+                let option = document.createElement('option');
+                option.value = lecturer[i];
+                option.text = lecturer[i];
+                selectTeacher.appendChild(option);
+            }
+        });
+    });
+    
+    stats();
 });
+
+let sectors = document.querySelectorAll('.form-group');
+console.log(sectors);
+sectors.forEach((e) => e.addEventListener('change',(event) => {
+    element_id = e.querySelector('select').id;
+    if(!localStorage.getItem(localStorage)){
+        localStorage.setItem(element_id, event.target.value);
+    }
+    checkStorage();
+    console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
+}));
 
 // Survey results
 function stats() {
     document.querySelectorAll('.form-group').forEach((e) =>
         e.addEventListener('change',() => {
 
-            let selectStatSpeciality = document.getElementById('selectStatSpeciality').value;
-            let selectStatDiscipline = document.getElementById('selectStatDiscipline').value;
-            let selectStatLecturer = document.getElementById('selectStatLecturer').value;
+            let selectStatSpeciality = document.getElementById('specialitySelect').value;
+            let selectStatDiscipline = document.getElementById('selectDiscipline').value;
+            let selectStatLecturer = document.getElementById('selectTeacher').value;
             let buttonOnClickStat = document.getElementById('btnStat');
 
             if (selectStatSpeciality !== '' && selectStatDiscipline !== '' &&
