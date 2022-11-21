@@ -19,26 +19,26 @@ async function getAllSpeciality() {
 	return await getValuesFetch(url);
 }
 
+async function getAnswerByLecturer() {
+	let selectTeacher = document.getElementById("selectTeacher").value;
+
+	let url = "http://localhost:8080/survey/answer/getByLecturer";
+	let params = "?lecturer=" + selectTeacher;
+	return await getValuesFetch(url,  encodeURI(params));
+}
+
 // Get values from first 4 select boxes
 function getAnswers() {
-	
 	let educationLevelSelect = document.getElementById("educationLevelSelect").value;
 	let yearSelect = document.getElementById("yearSelect").value;
 	let educationalFormSelect = document.getElementById("educationalFormSelect").value;
 	let specialitySelect = document.getElementById("specialitySelect").value;
-	
-	console.log(educationLevelSelect);
-	console.log(yearSelect);
-	console.log(educationalFormSelect);
-	console.log(specialitySelect);
 
 	let url = "http://localhost:8080/survey/subject/getSubjectByParams";
 	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
 		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
 
-	getValuesFetch(url, encodeURI(params), false).then(() => {
-		console.log('The values have been sent...');
-	});
+	getValuesFetch(url);
 }
 
 // Get list of subjects from server
@@ -105,6 +105,8 @@ async function getLecturersStats() {
 	return await getValuesFetch(url, encodeURI(params), false);
 }
 
+
+
 // Send values to server
 async function getValuesFetch(url, params = "") {
 
@@ -128,10 +130,46 @@ async function getValuesFetch(url, params = "") {
 	return response.json();
 }
 
+async function sendAnswer() {
+
+	let answer =     {
+        answer1:1,
+        answer2:2,
+        answer3:3,
+        answer4:4,
+        answer5:5,
+        answer6:6,
+        answer7:7,
+        answer8:8,
+        answer9:9,
+        answer10:10,
+        answer11:11,
+		lecturer:"",
+        extra:""
+    };
+
+	answer.answer1 = parseInt( document.getElementById('selectCompetence').value);
+	answer.answer2 = parseInt(document.getElementById('selectUnderstandability').value);
+	answer.answer3 = parseInt(document.getElementById('selectPracticality').value);
+	answer.answer4 = parseInt(document.getElementById('selectTools').value);
+	answer.answer5 = parseInt(document.getElementById('selectCommunication').value);
+	answer.answer6 = parseInt(document.getElementById('selectInformativeness').value);
+	answer.answer7 = parseInt(document.getElementById('selectObjectivity').value);
+	answer.answer8 = parseInt(document.getElementById('selectClassroom').value);
+	answer.answer9 = parseInt(document.getElementById('selectConferences').value);
+	answer.answer10 = parseInt(document.getElementById('selectFriendliness').value);
+	answer.answer11 = parseInt(document.getElementById('selectPreferences').value);
+	answer.lecturer = localStorage.getItem("teacherSelect");
+	answer.extra = document.getElementById('comment').value;
+
+	let url = "http://localhost:8080/survey/answer/send";
+
+	return await sendJsonFetch(url, answer);
+}
+
 async function sendJsonFetch(url, json) {
 
-	console.log(url+params);
-	url += params;
+	console.log("JSON.stringify(json) -- " + JSON.stringify(json));
 
 	let response = await fetch(url, {
 		method: 'POST',
@@ -140,12 +178,13 @@ async function sendJsonFetch(url, json) {
 			'Content-Type': 'application/json',
 			'Access-Control-Allow-Origin' :'http://localhost:8080/',
 			'Access-Control-Allow-Credentials':'true'
-		}
+		},
+		body: JSON.stringify(json)
 	});
 	
 	if (!response.ok) {
 		throw new Error();
 	}
 
-	return response.json();
+	return response;
 }

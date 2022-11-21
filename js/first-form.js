@@ -283,18 +283,19 @@ let createTeacherSelectBox = function f2() {
     }
 };
 
-function checkPassedTeacher(teacter){
+function checkPassedTeacher(teacher){
     teachers = JSON.parse(localStorage.getItem("passedTeacher"));
-    if(!teachers || teacters.length == 0){
+    if(!teachers || teacher.length == 0){
         return false;
     }
     for (let index = 0; index < teachers.length; index++) {
         const element = teachers[index];
-        if(element === teacter){
-            return false;
+        console.log( "element -- " + element);
+        if(element === teacher){
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 function createButtonSubmit() {
