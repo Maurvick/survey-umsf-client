@@ -7,16 +7,10 @@ let avgScores =  [
     0, 0, 0,
     0, 0, 0, 0, 0
 ];
-let json = [];
+let comment = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     // Load speciality options
-    avgScores =  [
-        '', 0, 0, 
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0, 0, 0
-    ];
     let selectSpeciality = document.getElementById('specialitySelect');
     speciality = [''];
     
@@ -59,6 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
     selectDiscipline.addEventListener('change',(event) => {
         lecturer = [''];
         selectTeacher.innerHTML = '';
+        avgScores =  [
+            '', 0, 0, 
+            0, 0, 0,
+            0, 0, 0,    
+            0, 0, 0, 0, 0
+        ];
+        comment = [];
     
         getLecturersStats().then(res => {
             for (const iterator of res) {
@@ -78,6 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
     selectTeacher.addEventListener('change',(event) => {
         lecturer = [''];
         document.querySelector('table').remove();
+        document.querySelectorAll('.comment').forEach((e) => {
+            e.remove();
+        });
+        avgScores =  [
+            '', 0, 0, 
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0, 0, 0
+        ];
+        comment = [];
     });
 
     stats();
@@ -243,6 +254,8 @@ function createStatTable() {
     // Adding the entire table to the body tag
     if (!isTableExists) {
         document.querySelector('main').appendChild(table);
+    } else {
+        return;
     }
     
     // Creating and adding data to first row of the table
@@ -287,6 +300,9 @@ function createStatTable() {
     let heading_13 = document.createElement('th');
     heading_13.innerHTML = "Середня оцінка";
 
+    let heading_14 = document.createElement('th');
+    heading_14.innerHTML = "Відгук";
+
     row_1.appendChild(heading_1);
     row_1.appendChild(heading_2);
     row_1.appendChild(heading_3);
@@ -300,14 +316,18 @@ function createStatTable() {
     row_1.appendChild(heading_11);
     row_1.appendChild(heading_12);
     row_1.appendChild(heading_13);
+    row_1.appendChild(heading_14);
     thead.appendChild(row_1);
 
     // Creating and adding data to second row of the table
     getAnswerByLecturer().then(res => {
-        json = res; 
-        console.log(json);
-        json.forEach((answer) => {
+        json_res = res; 
+        console.log(json_res);
+        json_res.forEach((answer) => {
             console.log(answer);
+            comment = [...comment, answer.extra];
+            console.log("avgScores[13] -- " + avgScores[13]);
+            document.querySelector('main').appendChild(createComment(comment[avgScores[13]]));
             addStatsRow(table, answer);
         });
         addAvgStats(table);
@@ -419,7 +439,69 @@ function addStatsRow(table, json_one) {
     cell_13.innerHTML = round(json_one.avg);
     avgScores[12] += json_one.avg;
     avgScores[13] += 1;
+
+    let cell_14 = row.insertCell(13);
+    let divDropdown = createButtomComment(comment[avgScores[13]-1]);
+    console.log(divDropdown);
+    cell_14.appendChild(divDropdown);//comment[avgScores[13]-1]
 }
+
+function createComment(comment){
+    let divComment = document.createElement('div');
+    divComment.className = 'comment';
+
+    let p = document.createElement('p');
+    p.innerText = comment;
+    divComment.appendChild(p);
+
+    return divComment;
+}
+
+function createButtomComment(comment){
+    let divDropdown = document.createElement('div');
+    divDropdown.className = 'dropdown';
+
+    let buttonComment = document.createElement('button');
+    buttonComment.className = 'dropbtn';
+
+    divDropdown.appendChild(buttonComment);
+
+    buttonComment.addEventListener('click',() => {
+        myFunction();
+    });
+
+    let dropdown_content = document.createElement('div');
+    dropdown_content.className = 'dropdown-content';
+
+    divDropdown.appendChild(dropdown_content);
+
+    let p = document.createElement('p');
+    p.innerText = comment;
+    dropdown_content.appendChild(p);
+
+    return divDropdown;
+}
+
+function myFunction() {
+    //document.getElementById("myDropdown").classList.toggle("show");
+    document.querySelectorAll(".dropdown-content").forEach((element) => {
+        element.classList.toggle("show");
+    });
+}
+  
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
 
 function round(num){
     return Math.floor((num * 100)) / 100;

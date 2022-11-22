@@ -313,6 +313,7 @@ function createLecturerForm() {
     textAreaComment.setAttribute('rows','5');
     textAreaComment.setAttribute('cols','33');
     textAreaComment.required = false;
+    textAreaComment.setAttribute('maxlength','255');
 
     divComment.appendChild(textAreaComment);
 
