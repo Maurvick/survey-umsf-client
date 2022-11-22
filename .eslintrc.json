@@ -21,6 +21,12 @@
         "semi": [
             "warn",
             "always"
+        ],
+        "no-undef" : [
+            "warn"
+        ],
+        "no-unused-vars" : [
+            "warn"
         ]
     }
 }
