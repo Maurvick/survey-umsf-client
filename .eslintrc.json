@@ -23,10 +23,10 @@
             "always"
         ],
         "no-undef" : [
-            "warn"
+            "off"
         ],
         "no-unused-vars" : [
-            "warn"
+            "off"
         ]
     }
 }
