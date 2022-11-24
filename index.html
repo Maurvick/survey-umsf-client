@@ -1,60 +1,77 @@
 <!DOCTYPE html>
 <html lang="en-uk">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Survey of UMSF quality of the educational process">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Survey of UMSF quality of the educational process"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>UMSF Survey</title>
 
-    <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Rubik"
+    />
+    <link rel="stylesheet" href="css/style.css" />
 
+    <script src="js/main.js"></script>
+    <script src="js/second-form.js"></script>
+  </head>
 
-</head>
-
-<body onload="">
+  <body>
     <main>
-        <form>
-            <h2>Опитування УМСФ</h2>
-            <hr><p>Шановні здобувачі вищої освіти, 
-            просимо вас оцінити викладання дисциплін в УМСФ
-            для покращення якості освітнього процесу 
-            за вашою освітньою програмою. 
-            Усі анкети анонімні.</p>
+      <form>
+        <h2>Опитування УМСФ</h2>
+        <hr />
+        <p>
+          Шановні здобувачі вищої освіти, просимо вас оцінити викладання
+          дисциплін в УМСФ для покращення якості освітнього процесу за вашою
+          освітньою програмою. Усі анкети анонімні.
+        </p>
+        <p>
+          Необхідно оцінити всіх викладачів, після оцінення, викладач зникає зі
+          списку.
+        </p>
 
-            <!-- Options added by first-form.js -->
-            <div class="form-group">
-                <label for="educationLevelSelect">Освітній рівень</label>
-                <select class="form-control" id="educationLevelSelect" required>
-                </select>
-            </div>
+        <!-- Options added by first-form.js -->
+        <div class="form-group">
+          <label for="educationLevelSelect">Освітній рівень</label>
+          <select
+            class="form-control"
+            id="educationLevelSelect"
+            required
+          ></select>
+        </div>
 
-            <div class="form-group">
-                <label for="educationalFormSelect">Форма навчання</label>
-                <select class="form-control" id="educationalFormSelect" required>
-                </select>
-            </div>
+        <div class="form-group">
+          <label for="educationalFormSelect">Форма навчання</label>
+          <select
+            class="form-control"
+            id="educationalFormSelect"
+            required
+          ></select>
+        </div>
 
-            <div class="form-group">
-                <label for="yearSelect">Рік набору</label>
-                <select class="form-control" id="yearSelect" required>
-                </select>
-            </div>
+        <div class="form-group">
+          <label for="yearSelect">Рік набору</label>
+          <select class="form-control" id="yearSelect" required></select>
+        </div>
 
-            <div class="form-group">
-                <label for="specialitySelect">Освітня програма</label>
-                <select class="form-control" id="specialitySelect" required>
-                </select>
-            </div>
-        </form>
+        <div class="form-group">
+          <label for="specialitySelect">Освітня програма</label>
+          <select class="form-control" id="specialitySelect" required></select>
+        </div>
+      </form>
     </main>
-</body>
-<script src="js/main.js"></script>
-<script src="js/first-form.js"></script>
-<script src="js/second-form.js"></script>
+  </body>
+  <script src="js/first-form.js"></script>
 </html>
