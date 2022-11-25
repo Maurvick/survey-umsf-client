@@ -53,7 +53,7 @@ async function getSubjects() {
 	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
 		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
 
-	console.log('getSubjects() is working...');
+	console.log("getSubjects() is working...");
 
 	return await getValuesFetch(url, encodeURI(params), false);
 }
@@ -65,14 +65,14 @@ async function getLecturers() {
 	let yearSelect = localStorage.getItem("yearSelect");
 	let educationalFormSelect = localStorage.getItem("educationalFormSelect");
 	let specialitySelect = localStorage.getItem("specialitySelect");
-	let selectDiscipline = document.getElementById('selectDiscipline').value;
+	let selectDiscipline = document.getElementById("selectDiscipline").value;
 
 	let url = "http://localhost:8080/survey/subject/getLecturerByParams";
 	let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
 		"&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect +
 		"&title=" + selectDiscipline;
 
-	console.log('getLecturers() is working... , url: ' + url + params);
+	console.log("getLecturers() is working... , url: " + url + params);
 
 
 	return await getValuesFetch(url, encodeURI(params), false);
@@ -80,12 +80,12 @@ async function getLecturers() {
 
 async function getSubjectsStats() {
 
-	let specialitySelect = document.getElementById('specialitySelect').value;
+	let specialitySelect = document.getElementById("specialitySelect").value;
 
 	let url = "http://localhost:8080/survey/subject/getSubjectStatsByParams";
 	let params = "?speciality=" + specialitySelect;
 
-	console.log('getSubjectsStats() is working...');
+	console.log("getSubjectsStats() is working...");
 
 	return await getValuesFetch(url, encodeURI(params), false);
 }
@@ -93,14 +93,14 @@ async function getSubjectsStats() {
 // Get list of lecturers from server
 async function getLecturersStats() {
 
-	let specialitySelect = document.getElementById('specialitySelect').value;
-	let selectDiscipline = document.getElementById('selectDiscipline').value;
+	let specialitySelect = document.getElementById("specialitySelect").value;
+	let selectDiscipline = document.getElementById("selectDiscipline").value;
 
 	let url = "http://localhost:8080/survey/subject/getLecturerStatsByParams";
 	let params = "?speciality=" + specialitySelect +
 		"&title=" + selectDiscipline;
 
-	console.log('getLecturersStats() is working... , url: ' + url + params);
+	console.log("getLecturersStats() is working... , url: " + url + params);
 
 	return await getValuesFetch(url, encodeURI(params), false);
 }
@@ -114,12 +114,12 @@ async function getValuesFetch(url, params = "") {
 	url += params;
 
 	let response = await fetch(url, {
-		method: 'GET',
-		mode: 'cors',
+		method: "GET",
+		mode: "cors",
 		headers: {
-			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin' :'http://localhost:8080/',
-			'Access-Control-Allow-Credentials':'true'
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin" :"http://localhost:8080/",
+			"Access-Control-Allow-Credentials":"true"
 		}
 	});
 	
@@ -148,19 +148,19 @@ async function sendAnswer() {
         extra:""
     };
 
-	answer.answer1 = parseInt( document.getElementById('selectCompetence').value);
-	answer.answer2 = parseInt(document.getElementById('selectUnderstandability').value);
-	answer.answer3 = parseInt(document.getElementById('selectPracticality').value);
-	answer.answer4 = parseInt(document.getElementById('selectTools').value);
-	answer.answer5 = parseInt(document.getElementById('selectCommunication').value);
-	answer.answer6 = parseInt(document.getElementById('selectInformativeness').value);
-	answer.answer7 = parseInt(document.getElementById('selectObjectivity').value);
-	answer.answer8 = parseInt(document.getElementById('selectClassroom').value);
-	answer.answer9 = parseInt(document.getElementById('selectConferences').value);
-	answer.answer10 = parseInt(document.getElementById('selectFriendliness').value);
-	answer.answer11 = parseInt(document.getElementById('selectPreferences').value);
+	answer.answer1 = parseInt( document.getElementById("selectCompetence").value);
+	answer.answer2 = parseInt(document.getElementById("selectUnderstandability").value);
+	answer.answer3 = parseInt(document.getElementById("selectPracticality").value);
+	answer.answer4 = parseInt(document.getElementById("selectTools").value);
+	answer.answer5 = parseInt(document.getElementById("selectCommunication").value);
+	answer.answer6 = parseInt(document.getElementById("selectInformativeness").value);
+	answer.answer7 = parseInt(document.getElementById("selectObjectivity").value);
+	answer.answer8 = parseInt(document.getElementById("selectClassroom").value);
+	answer.answer9 = parseInt(document.getElementById("selectConferences").value);
+	answer.answer10 = parseInt(document.getElementById("selectFriendliness").value);
+	answer.answer11 = parseInt(document.getElementById("selectPreferences").value);
 	answer.lecturer = localStorage.getItem("teacherSelect");
-	answer.extra = document.getElementById('comment').value;
+	answer.extra = document.getElementById("comment").value;
 
 	let url = "http://localhost:8080/survey/answer/send";
 
@@ -172,12 +172,12 @@ async function sendJsonFetch(url, json) {
 	console.log("JSON.stringify(json) -- " + JSON.stringify(json));
 
 	let response = await fetch(url, {
-		method: 'POST',
-		mode: 'cors',
+		method: "POST",
+		mode: "cors",
 		headers: {
-			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin' :'http://localhost:8080/',
-			'Access-Control-Allow-Credentials':'true'
+			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin" :"http://localhost:8080/",
+			"Access-Control-Allow-Credentials":"true"
 		},
 		body: JSON.stringify(json)
 	});
