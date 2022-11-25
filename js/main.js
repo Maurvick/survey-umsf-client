@@ -97,8 +97,7 @@ async function getLecturersStats() {
 	let selectDiscipline = document.getElementById("selectDiscipline").value;
 
 	let url = "http://localhost:8080/survey/subject/getLecturerStatsByParams";
-	let params = "?speciality=" + specialitySelect +
-		"&title=" + selectDiscipline;
+	let params = "?speciality=" + specialitySelect;
 
 	console.log("getLecturersStats() is working... , url: " + url + params);
 
