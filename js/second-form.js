@@ -1,6 +1,5 @@
 // Create lecturer evaluation form
 function createLecturerForm() {
-    
     // Delete form
     let pageElement = document.querySelector("form");
 
@@ -338,10 +337,11 @@ function createLecturerForm() {
             if (resp.status === 200) {
                 alert("Дякуємо за оцінку!");
             }
-        }).catch(err => {
+        }).catch(() => {
             alert("Что-то пошло не так!");
             location.reload();
         });
+        
         teachers.push(selectTeacher);
         console.log(teachers);
         localStorage.setItem("passedTeacher",JSON.stringify(teachers));

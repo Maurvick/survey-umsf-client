@@ -30,13 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectDiscipline = document.getElementById("selectDiscipline");
     let selectTeacher = document.getElementById("selectTeacher");
 
-    selectSpeciality.addEventListener("change",(event) => {
+    selectSpeciality.addEventListener("change",() => {
         discipline = [""];
         selectDiscipline.innerHTML = "";
         selectTeacher.innerHTML = "";
     
         getSubjectsStats().then(res => {
-            subject = [""];
+            let subject = [""];
             for (const iterator of res) {
                 subject = [...subject, iterator.title];
             }
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Load lecturer options
-    selectDiscipline.addEventListener("change",(event) => {
+    selectDiscipline.addEventListener("change",() => {
         lecturer = [""];
         selectTeacher.innerHTML = "";
         avgScores =  [
@@ -74,9 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    
-    
-    selectTeacher.addEventListener("change",(event) => {
+    // Remove old comments
+    selectTeacher.addEventListener("change",() => {
         lecturer = [""];
         document.querySelector("table").remove();
         document.querySelectorAll(".comment").forEach((e) => {
@@ -100,11 +99,14 @@ let sectors = document.querySelectorAll(".form-group");
 console.log(sectors);
 
 sectors.forEach((e) => e.addEventListener("change",(event) => {
-    element_id = e.querySelector("select").id;
-    if(!localStorage.getItem(localStorage)){
+    let element_id = e.querySelector("select").id;
+    
+    if(!localStorage.getItem("items")){
         localStorage.setItem(element_id, event.target.value);
     }
+    
     checkStorage();
+    
     console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
 }));
 
@@ -126,114 +128,6 @@ function stats() {
                 });
             }
     }));
-}
-
-function createStatSpecialitySelectBox() {
-    // Create divStatSpeciality
-    let divStatSpeciality = document.createElement("div");
-    
-    divStatSpeciality.className = "form-group";
-    
-    document.querySelector("form").appendChild(divStatSpeciality);
-
-    // Create selectStatSpeciality 
-    let labelStatSpeciality = document.createElement("label");
-    let selectStatSpeciality = document.createElement("select");
-    
-    selectStatSpeciality.className = "form-control";
-    
-    labelStatSpeciality.setAttribute("for","selectStatSpeciality");
-    selectStatSpeciality.setAttribute("id","selectStatSpeciality");
-    
-    labelStatSpeciality.innerText = "Спеціальність";
-
-    // selectStatSpeciality.required = true;
-
-    divStatSpeciality.appendChild(labelStatSpeciality);
-    divStatSpeciality.appendChild(selectStatSpeciality);
-
-    for (let i = 0; i < statSpeciality.length; i++) {
-        let option = document.createElement("option");
-        option.value = statSpeciality[i];
-        option.text = statSpeciality[i];
-        selectStatSpeciality.appendChild(option);
-    }
-}
-
-function createStatDisciplineSelectBox() {
-    // Create divStatDiscipline
-    let divStatDiscipline = document.createElement("div");
-    
-    divStatDiscipline.className = "form-group";
-    
-    document.querySelector("form").appendChild(divStatDiscipline);
-
-    // Create selectStatDiscipline 
-    let labelStatDiscipline = document.createElement("label");
-    let selectStatDiscipline = document.createElement("select");
-    
-    selectStatDiscipline.className = "form-control";
-    
-    labelStatDiscipline.setAttribute("for","selectStatDiscipline");
-    selectStatDiscipline.setAttribute("id","selectStatDiscipline");
-    
-    labelStatDiscipline.innerText = "Дисципліна";
-
-    // selectStatDiscipline.required = true;
-
-    divStatDiscipline.appendChild(labelStatDiscipline);
-    divStatDiscipline.appendChild(selectStatDiscipline);
-
-    for (let i = 0; i < statDiscipline.length; i++) {
-        let option = document.createElement("option");
-        option.value = statDiscipline[i];
-        option.text = statDiscipline[i];
-        selectStatDiscipline.appendChild(option);
-    }
-}
-
-function createStatLecturerSelectBox() {
-    // Create divStatLecturer
-    let divStatLecturer = document.createElement("div");
-    
-    divStatLecturer.className = "form-group";
-    
-    document.querySelector("form").appendChild(divStatLecturer);
-
-    // Create selectStatLecturer 
-    let labelStatLecturer = document.createElement("label");
-    let selectStatLecturer = document.createElement("select");
-    
-    selectStatLecturer.className = "form-control";
-    
-    labelStatLecturer.setAttribute("for","selectStatLecturer");
-    selectStatLecturer.setAttribute("id","selectStatLecturer");
-    
-    labelStatLecturer.innerText = "Викладач";
-
-    // selectStatLecturer.required = true;
-
-    divStatLecturer.appendChild(labelStatLecturer);
-    divStatLecturer.appendChild(selectStatLecturer);
-
-    for (let i = 0; i < statLecturer.length; i++) {
-        let option = document.createElement("option");
-        option.value = statLecturer[i];
-        option.text = statLecturer[i];
-        selectStatLecturer.appendChild(option);
-    }
-}
-
-function createStatButtonSubmit() {
-    // Create submit button
-    let buttonStatSubmit = document.createElement("button");
-    
-    buttonStatSubmit.className = "btn btn-secondary btn-lg btn-block";
-    buttonStatSubmit.setAttribute("type","button");
-    buttonStatSubmit.id = "btnStat";
-    buttonStatSubmit.innerText = "Результати";
-    
-    document.querySelector("form").appendChild(buttonStatSubmit);
 }
 
 function createStatTable() {
@@ -332,13 +226,9 @@ function createStatTable() {
         });
         addAvgStats(table);
     });
-
-    
 }
 
 function addAvgStats(table) {
-    temp_count = 0;
-    
     let row = table.insertRow(-1);
 
     let cell_1 = row.insertCell(0);
@@ -383,8 +273,6 @@ function addAvgStats(table) {
 }
 
 function addStatsRow(table, json_one) {
-    temp_count = 0;
-    
     let row = table.insertRow(1);
 
     let cell_1 = row.insertCell(0);
@@ -441,12 +329,12 @@ function addStatsRow(table, json_one) {
     avgScores[13] += 1;
 
     let cell_14 = row.insertCell(13);
-    let divDropdown = createButtomComment(comment[avgScores[13]-1]);
+    let divDropdown = createButtonComment(comment[avgScores[13]-1]);
     console.log(divDropdown);
     cell_14.appendChild(divDropdown);//comment[avgScores[13]-1]
 }
 
-function createComment(comment){
+function createComment(comment) {
     let divComment = document.createElement("div");
     divComment.className = "comment";
 
@@ -457,7 +345,7 @@ function createComment(comment){
     return divComment;
 }
 
-function createButtomComment(comment){
+function createButtonComment(comment){
     let divDropdown = document.createElement("div");
     divDropdown.className = "dropdown";
 
@@ -467,7 +355,7 @@ function createButtomComment(comment){
     divDropdown.appendChild(buttonComment);
 
     buttonComment.addEventListener("click",() => {
-        myFunction();
+        showTab();
     });
 
     let dropdown_content = document.createElement("div");
@@ -482,20 +370,20 @@ function createButtomComment(comment){
     return divDropdown;
 }
 
-function myFunction() {
-    //document.getElementById("myDropdown").classList.toggle("show");
+function showTab() {
+    // document.getElementById("myDropdown").classList.toggle("show");
     document.querySelectorAll(".dropdown-content").forEach((element) => {
         element.classList.toggle("show");
     });
 }
   
-  // Close the dropdown if the user clicks outside of it
+  // Close the dropdown if the user clicks outside it
   window.onclick = function(event) {
     if (!event.target.matches(".dropbtn")) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        let i;
+        for (i = 0; i < dropdowns.length; i++) {
+        let openDropdown = dropdowns[i];
         if (openDropdown.classList.contains("show")) {
           openDropdown.classList.remove("show");
         }

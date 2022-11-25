@@ -5,15 +5,6 @@ let speciality =  [""];
 let subject = [""];
 let lecturer = [""];
 
-// function f_aw(){ getAllEducationLevel().then(res => {
-//     educationLevel = [''];
-//     for (const iterator of res) {
-//         educationLevel = [...educationLevel, iterator.education_level];
-//     }
-//     console.log("await...");
-// })
-// };
-
 // Save answers after reloading page
 if (!localStorage.getItem("educationLevelSelect")) {
     localStorage.setItem("educationLevelSelect","");
@@ -35,8 +26,8 @@ if (!localStorage.getItem("teacherSelect")) {
     localStorage.setItem("teacherSelect","");
 }
 
+// Print local storage values
 function checkStorage() {
-
     console.log("Сейчас обрабатывается рендер educationLevelSelect--" +
     localStorage.getItem("educationLevelSelect") + " yearSelect--" +
     localStorage.getItem("yearSelect") + " educationalFormSelect--" +
@@ -44,93 +35,109 @@ function checkStorage() {
     localStorage.getItem("specialitySelect"));
 }
 
+// Set local storage values after page reload
 let sectors = document.querySelectorAll(".form-group");
 console.log(sectors);
+
 sectors.forEach((e) => e.addEventListener("change",(event) => {
-    element_id = e.querySelector("select").id;
-    if(!localStorage.getItem(localStorage)){
+    let element_id = e.querySelector("select").id;
+    
+    if(!localStorage.getItem("items")) {
         localStorage.setItem(element_id, event.target.value);
     }
     checkStorage();
+    
     console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
 }));
 
-function educationLevelFill(){
+// Add values for educationLevel select box
+function educationLevelFill() {
     let educationLevelSelect = document.getElementById("educationLevelSelect");
     educationLevel = [""];
-    temp = getAllEducationLevel().then(res => {
-    for (const iterator of res) {
-        educationLevel = [...educationLevel, iterator.educationLevel];
-    }
-    for (let i = 0; i < educationLevel.length; i++) {
-        let option = document.createElement("option");
-        option.value = educationLevel[i];
-        option.text = educationLevel[i];
-        educationLevelSelect.appendChild(option);
-    }
-    console.log(localStorage.getItem("educationLevelSelect"));
-    if(localStorage.getItem("educationLevelSelect")){
-        educationLevelSelect.value = localStorage.getItem("educationLevelSelect");
-    }});
+    
+    getAllEducationLevel().then(res => {
+        for (const iterator of res) {
+            educationLevel = [...educationLevel, iterator.educationLevel];
+        }
+        for (let i = 0; i < educationLevel.length; i++) {
+            let option = document.createElement("option");
+            option.value = educationLevel[i];
+            option.text = educationLevel[i];
+            educationLevelSelect.appendChild(option);
+        }
+        console.log(localStorage.getItem("educationLevelSelect"));
+        if (localStorage.getItem("educationLevelSelect")) {
+            educationLevelSelect.value = localStorage.getItem("educationLevelSelect");
+        }
+    });
 }
 
-function yearFill(){
+// Add values for year select box
+function yearFill() {
     let yearSelect = document.getElementById("yearSelect");
     years = [""];
-    temp = getAllYear().then(res => {
-    for (const iterator of res) {
-        years = [...years, iterator.year];
-    }
-    for (let i = 0; i < years.length; i++) {
-        let option = document.createElement("option");
-        option.value = years[i];
-        option.text = years[i];
-        yearSelect.appendChild(option);
-    }
-    if(localStorage.getItem("yearSelect")){
-        yearSelect.value = localStorage.getItem("yearSelect");
-    }});
     
+    getAllYear().then(res => {
+        for (const iterator of res) {
+            years = [...years, iterator.year];
+        }
+        for (let i = 0; i < years.length; i++) {
+            let option = document.createElement("option");
+            option.value = years[i];
+            option.text = years[i];
+            yearSelect.appendChild(option);
+        }
+        if (localStorage.getItem("yearSelect")) {
+            yearSelect.value = localStorage.getItem("yearSelect");
+        }
+    });
 }
 
-function educationFormFill(){
+// Add values for educationForm select box
+function educationFormFill() {
     let educationalFormSelect = document.getElementById("educationalFormSelect");
     educationalForm = [""];
-    temp = getAllEducationalForm().then(res => {
-    for (const iterator of res) {
-        educationalForm = [...educationalForm, iterator.educationalForm];
-    }
-    for (let i = 0; i < educationalForm.length; i++) {
-        let option = document.createElement("option");
-        option.value = educationalForm[i];
-        option.text = educationalForm[i];
-        educationalFormSelect.appendChild(option);
-    }
-    if(localStorage.getItem("educationalFormSelect")){
-        educationalFormSelect.value = localStorage.getItem("educationalFormSelect");
-    }});
     
+    getAllEducationalForm().then(res => {
+        for (const iterator of res) {
+            educationalForm = [...educationalForm, iterator.educationalForm];
+        }
+        for (let i = 0; i < educationalForm.length; i++) {
+            let option = document.createElement("option");
+            option.value = educationalForm[i];
+            option.text = educationalForm[i];
+            educationalFormSelect.appendChild(option);
+        }
+        if (localStorage.getItem("educationalFormSelect")) {
+            educationalFormSelect.value = localStorage.getItem("educationalFormSelect");
+        }
+    });
 }
 
-function specialityFill(){
+// Add values for speciality select box
+function specialityFill() {
     let selectSpeciality = document.getElementById("specialitySelect");
     speciality = [""];
-    temp = getAllSpeciality().then(res => {
-    for (const iterator of res) {
-        speciality = [...speciality, iterator.speciality];
-    }
-    for (let i = 0; i < speciality.length; i++) {
-        let option = document.createElement("option");
-        option.value = speciality[i];
-        option.text = speciality[i];
-        selectSpeciality.appendChild(option);
-    }
-    if(localStorage.getItem("specialitySelect")){
-        selectSpeciality.value = localStorage.getItem("specialitySelect");
-    }});
+    
+    getAllSpeciality().then(res => {
+        for (const iterator of res) {
+            speciality = [...speciality, iterator.speciality];
+        }
+        for (let i = 0; i < speciality.length; i++) {
+            let option = document.createElement("option");
+            option.value = speciality[i];
+            option.text = speciality[i];
+            selectSpeciality.appendChild(option);
+        }
+        if (localStorage.getItem("specialitySelect")) {
+            selectSpeciality.value = localStorage.getItem("specialitySelect");
+        }
+    });
 }
-paramsCheack();
-// Add options to first 4 select boxes
+
+paramsCheck();
+
+// Add options to first four select boxes
 document.addEventListener("DOMContentLoaded", function() {
     educationLevelFill();
     yearFill();
@@ -140,27 +147,26 @@ document.addEventListener("DOMContentLoaded", function() {
     // Add discipline select box when all questions answered
     document.querySelectorAll(".form-group").forEach((e) =>
         e.addEventListener("change",() => {
-            paramsCheack();
+            paramsCheck();
     }));
-        
 });
 
-function paramsCheack() {
-    if (localStorage.getItem("educationLevelSelect") != "" && localStorage.getItem("yearSelect") != ""  && localStorage.getItem("educationalFormSelect") != ""  && localStorage.getItem("specialitySelect") != "") {
-                
-        //getAnswers();
-        
+// Check entered values in local storage and add discipline select box
+function paramsCheck() {
+    if (localStorage.getItem("educationLevelSelect") !== "" &&
+        localStorage.getItem("yearSelect") !== ""  &&
+        localStorage.getItem("educationalFormSelect") !== ""  &&
+        localStorage.getItem("specialitySelect") !== "") {
         console.log("Checking entered values...");
-        
-        let t = getSubjects().then(res => {
+
+        getSubjects().then(res => {
             subject = [""];
             for (const iterator of res) {
                 subject = [...subject, iterator.title];
             }
-                          
+
             console.log(subject);
             createDisciplineSelectBox(subject);
-                
         });
     }
 }
@@ -186,14 +192,12 @@ let createDisciplineSelectBox = function f1() {
     
     // Update values
     divDisciplines.addEventListener("change", () => {
-        valueDiscipline = document.getElementById("selectDiscipline");
-        
-        let y = getLecturers().then(res => {
+        getLecturers().then(res => {
             lecturer = [""];
             for (const iterator of res) {
                 lecturer = [...lecturer, iterator.lecturer];
             }
-                          
+
             console.log(res);
             createTeacherSelectBox(lecturer);
         });
@@ -229,7 +233,6 @@ let createDisciplineSelectBox = function f1() {
 };
 
 let createTeacherSelectBox = function f2() {
-    
     let form = document.querySelector("form");
     let existingElement = document.getElementById("selectTeacher");
 
@@ -251,8 +254,8 @@ let createTeacherSelectBox = function f2() {
     selectTeacher.required = true;
 
     divTeachers.addEventListener("change", () => {
-        valueTeacher = document.getElementById("selectTeacher");
-        
+        let valueTeacher = document.getElementById("selectTeacher");
+
         localStorage.setItem("teacherSelect",valueTeacher.value);
         console.log(localStorage.getItem("teacherSelect"));
     });
@@ -283,15 +286,18 @@ let createTeacherSelectBox = function f2() {
     }
 };
 
-function checkPassedTeacher(teacher){
-    teachers = JSON.parse(localStorage.getItem("passedTeacher"));
-    if(!teachers || teacher.length == 0){
+// Remove lecturer from list after evaluation
+function checkPassedTeacher(teacher) {
+    let teachers = JSON.parse(localStorage.getItem("passedTeacher"));
+
+    if (!teachers || teacher.length === 0) {
         return false;
     }
+
     for (let index = 0; index < teachers.length; index++) {
         const element = teachers[index];
         console.log( "element -- " + element);
-        if(element === teacher){
+        if (element === teacher) {
             return true;
         }
     }
@@ -299,7 +305,6 @@ function checkPassedTeacher(teacher){
 }
 
 function createButtonSubmit() {
-
     let form = document.querySelector("form");
     let buttonSubmit = document.createElement("button");
 
