@@ -22,6 +22,10 @@ if (!localStorage.getItem("specialitySelect")) {
     localStorage.setItem("specialitySelect","");
 }
 
+if (!localStorage.getItem("disciplineSelect")) {
+    localStorage.setItem("disciplineSelect","");
+}
+
 if (!localStorage.getItem("teacherSelect")) {
     localStorage.setItem("teacherSelect","");
 }
@@ -192,6 +196,10 @@ let createDisciplineSelectBox = function f1() {
     
     // Update values
     divDisciplines.addEventListener("change", () => {
+        let valueDiscipline = document.getElementById("selectDiscipline");
+
+        localStorage.setItem("disciplineSelect",valueDiscipline.value);
+        console.log(localStorage.getItem("disciplineSelect"));
         getLecturers().then(res => {
             lecturer = [""];
             for (const iterator of res) {
@@ -228,9 +236,26 @@ let createDisciplineSelectBox = function f1() {
         let option = document.createElement("option");
         option.value = subject[i];
         option.text = subject[i];
-        selectDiscipline.appendChild(option);
+        if(!checkPassedDiscipline(subject[i])){
+            selectDiscipline.appendChild(option);
+        }
     }
 };
+
+function checkPassedDiscipline(discipline){
+    disciplines = JSON.parse(localStorage.getItem("passedSubjects"));
+    if(!disciplines || discipline.length == 0){
+        return false;
+    }
+    for (let index = 0; index < disciplines.length; index++) {
+        const element = disciplines[index];
+        console.log( "element -- " + element);
+        if(element === discipline){
+            return true;
+        }
+    }
+    return false;
+}
 
 let createTeacherSelectBox = function f2() {
     let form = document.querySelector("form");
@@ -280,29 +305,9 @@ let createTeacherSelectBox = function f2() {
         let option = document.createElement("option");
         option.value = lecturer[i];
         option.text = lecturer[i];
-        if(!checkPassedTeacher(lecturer[i])){
-            selectTeacher.appendChild(option);
-        }
+        selectTeacher.appendChild(option);
     }
 };
-
-// Remove lecturer from list after evaluation
-function checkPassedTeacher(teacher) {
-    let teachers = JSON.parse(localStorage.getItem("passedTeacher"));
-
-    if (!teachers || teacher.length === 0) {
-        return false;
-    }
-
-    for (let index = 0; index < teachers.length; index++) {
-        const element = teachers[index];
-        console.log( "element -- " + element);
-        if (element === teacher) {
-            return true;
-        }
-    }
-    return false;
-}
 
 function createButtonSubmit() {
     let form = document.querySelector("form");

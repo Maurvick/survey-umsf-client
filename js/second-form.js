@@ -327,25 +327,26 @@ function createLecturerForm() {
 
     // On click create new survey-result form
     buttonSubmit.onclick = function() {
-        let selectTeacher = localStorage.getItem("teacherSelect");
-        let teachers = [];
+        let disciplineSelect = localStorage.getItem("disciplineSelect");
+        let subjects = [];
         
-        if (localStorage.getItem("passedTeacher")) {
-            teachers = JSON.parse(localStorage.getItem("passedTeacher"));
+        if (localStorage.getItem("passedSubjects")) {
+            subjects = JSON.parse(localStorage.getItem("passedSubjects"));
         } 
-        sendAnswer().then(resp => {
+        sendAnswer().then(resp => { 
             if (resp.status === 200) {
                 alert("Дякуємо за оцінку!");
             }
-        }).catch(() => {
+        }).catch((error) => {
+            console.error(error);
             alert("Что-то пошло не так!");
             location.reload();
         });
         
-        teachers.push(selectTeacher);
-        console.log(teachers);
-        localStorage.setItem("passedTeacher",JSON.stringify(teachers));
-        alert(teachers.length + " -- " + localStorage.getItem("passedTeacher"));
+        subjects.push(disciplineSelect);
+        console.log(subjects);
+        localStorage.setItem("passedSubjects",JSON.stringify(subjects));
+        alert(subjects.length + " -- " + localStorage.getItem("passedSubjects"));
         location.reload();
     };
 }
