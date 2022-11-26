@@ -1,5 +1,4 @@
 let speciality = [""];
-let discipline = [""];
 let lecturer = [""];
 let avgScores =  [
     "", 0, 0, 
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectTeacher = document.getElementById("selectTeacher");
 
     selectSpeciality.addEventListener("change",() => {
-        discipline = [""];
         selectDiscipline.innerHTML = "";
         selectTeacher.innerHTML = "";
     
@@ -215,7 +213,7 @@ function createStatTable() {
 
     // Creating and adding data to second row of the table
     getAnswerByLecturer().then(res => {
-        json_res = res; 
+        let json_res = res; 
         console.log(json_res);
         json_res.forEach((answer) => {
             console.log(answer);
@@ -355,7 +353,7 @@ function createButtonComment(comment){
     divDropdown.appendChild(buttonComment);
 
     buttonComment.addEventListener("click",() => {
-        showTab();
+        showComment();
     });
 
     let dropdown_content = document.createElement("div");
@@ -370,7 +368,7 @@ function createButtonComment(comment){
     return divDropdown;
 }
 
-function showTab() {
+function showComment() {
     // document.getElementById("myDropdown").classList.toggle("show");
     document.querySelectorAll(".dropdown-content").forEach((element) => {
         element.classList.toggle("show");

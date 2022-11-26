@@ -1,13 +1,18 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2022": true
     },
     "extends": "eslint:recommended",
     "overrides": [
     ],
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true
+        }
     },
     "rules": {
         "linebreak-style": [
@@ -27,6 +32,9 @@
         ],
         "no-unused-vars" : [
             "off"
+        ],
+        "no-var" : [
+            "warn"
         ]
     }
 }

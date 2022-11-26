@@ -7,23 +7,23 @@ let lecturer = [""];
 
 // Save answers after reloading page
 if (!localStorage.getItem("educationLevelSelect")) {
-    localStorage.setItem("educationLevelSelect","");
+    localStorage.setItem("educationLevelSelect", "");
 }
 
 if (!localStorage.getItem("yearSelect")) {
-    localStorage.setItem("yearSelect","");
+    localStorage.setItem("yearSelect", "");
 }
 
 if (!localStorage.getItem("educationalFormSelect")) {
-    localStorage.setItem("educationalFormSelect","");
+    localStorage.setItem("educationalFormSelect", "");
 }
 
 if (!localStorage.getItem("specialitySelect")) {
-    localStorage.setItem("specialitySelect","");
+    localStorage.setItem("specialitySelect", "");
 }
 
 if (!localStorage.getItem("teacherSelect")) {
-    localStorage.setItem("teacherSelect","");
+    localStorage.setItem("teacherSelect", "");
 }
 
 // Print local storage values
