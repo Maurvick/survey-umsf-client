@@ -25,30 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Load discipline options
-    let selectDiscipline = document.getElementById("selectDiscipline");
     let selectTeacher = document.getElementById("selectTeacher");
 
     selectSpeciality.addEventListener("change",() => {
-        selectDiscipline.innerHTML = "";
-        selectTeacher.innerHTML = "";
-    
-        getSubjectsStats().then(res => {
-            let subject = [""];
-            for (const iterator of res) {
-                subject = [...subject, iterator.title];
-            }
-            for (let i = 0; i < subject.length; i++) {
-                let option = document.createElement("option");
-                option.value = subject[i];
-                option.text = subject[i];
-                selectDiscipline.appendChild(option);
-            }
-        });
-    });
 
-    // Load lecturer options
-    selectDiscipline.addEventListener("change",() => {
         lecturer = [""];
         selectTeacher.innerHTML = "";
         avgScores =  [
@@ -114,11 +94,10 @@ function stats() {
         e.addEventListener("change",() => {
 
             let selectStatSpeciality = document.getElementById("specialitySelect").value;
-            let selectStatDiscipline = document.getElementById("selectDiscipline").value;
             let selectStatLecturer = document.getElementById("selectTeacher").value;
             let buttonOnClickStat = document.getElementById("btnStat");
 
-            if (selectStatSpeciality !== "" && selectStatDiscipline !== "" &&
+            if (selectStatSpeciality !== "" &&
             selectStatLecturer !== "") {
 
                 buttonOnClickStat.addEventListener("click", () => {

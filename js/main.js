@@ -81,11 +81,9 @@ async function getSubjectsStats() {
 // Get list of lecturers from server for statistics
 async function getLecturersStats() {
     let specialitySelect = document.getElementById("specialitySelect").value;
-    let selectDiscipline = document.getElementById("selectDiscipline").value;
 
 	let url = "http://localhost:8080/survey/subject/getLecturerStatsByParams";
-	let params = "?speciality=" + specialitySelect +
-		"&title=" + selectDiscipline;
+	let params = "?speciality=" + specialitySelect;
 
     console.log("getLecturersStats() is working... , url: " + url + params);
 
@@ -129,6 +127,7 @@ async function sendAnswer() {
         answer10:10,
         answer11:11,
         lecturer:"",
+        subject:"",
         extra:""
     };
 
@@ -144,7 +143,9 @@ async function sendAnswer() {
     answer.answer10 = parseInt(document.getElementById("selectFriendliness").value);
     answer.answer11 = parseInt(document.getElementById("selectPreferences").value);
     answer.lecturer = localStorage.getItem("teacherSelect");
+    answer.subject = localStorage.getItem("disciplineSelect");
     answer.extra = document.getElementById("comment").value;
+    
 
     let url = "http://localhost:8080/survey/answer/send";
 
