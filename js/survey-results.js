@@ -7,6 +7,8 @@ let avgScores =  [
     0, 0, 0, 0, 0
 ];
 let comment = [];
+let subject = [];
+let count_stats = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     // Load speciality options
@@ -38,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             0, 0, 0, 0, 0
         ];
         comment = [];
+        subject = [];
     
         getLecturersStats().then(res => {
             for (const iterator of res) {
@@ -54,8 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Remove old comments
     selectTeacher.addEventListener("change",() => {
-        lecturer = [""];
-        document.querySelector("table").remove();
+        document.querySelectorAll(".comment").remove();
+        if (document.querySelector("table")) {
+            document.querySelector("table").remove();
+        }
+
         document.querySelectorAll(".comment").forEach((e) => {
             e.remove();
         });
@@ -66,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             0, 0, 0, 0, 0
         ];
         comment = [];
+        subject = [];
     });
 
     stats();
@@ -92,7 +99,6 @@ sectors.forEach((e) => e.addEventListener("change",(event) => {
 function stats() {
     document.querySelectorAll(".form-group").forEach((e) =>
         e.addEventListener("change",() => {
-
             let selectStatSpeciality = document.getElementById("specialitySelect").value;
             let selectStatLecturer = document.getElementById("selectTeacher").value;
             let buttonOnClickStat = document.getElementById("btnStat");
@@ -136,43 +142,46 @@ function createStatTable() {
     heading_1.innerHTML = "Викладач";
     
     let heading_2 = document.createElement("th");
-    heading_2.innerHTML = "Q1";
+    heading_2.innerHTML = "Дисципліна";
     
     let heading_3 = document.createElement("th");
-    heading_3.innerHTML = "Q2";
+    heading_3.innerHTML = "Q1";
 
     let heading_4 = document.createElement("th");
-    heading_4.innerHTML = "Q3";
+    heading_4.innerHTML = "Q2";
 
     let heading_5 = document.createElement("th");
-    heading_5.innerHTML = "Q4";
+    heading_5.innerHTML = "Q3";
 
     let heading_6 = document.createElement("th");
-    heading_6.innerHTML = "Q5";
+    heading_6.innerHTML = "Q4";
 
     let heading_7 = document.createElement("th");
-    heading_7.innerHTML = "Q6";
+    heading_7.innerHTML = "Q5";
 
     let heading_8 = document.createElement("th");
-    heading_8.innerHTML = "Q7";
+    heading_8.innerHTML = "Q6";
 
     let heading_9 = document.createElement("th");
-    heading_9.innerHTML = "Q8";
+    heading_9.innerHTML = "Q7";
 
     let heading_10 = document.createElement("th");
-    heading_10.innerHTML = "Q9";
+    heading_10.innerHTML = "Q8";
 
     let heading_11 = document.createElement("th");
-    heading_11.innerHTML = "Q10";
+    heading_11.innerHTML = "Q9";
 
     let heading_12 = document.createElement("th");
-    heading_12.innerHTML = "Q11";
+    heading_12.innerHTML = "Q10";
 
     let heading_13 = document.createElement("th");
-    heading_13.innerHTML = "Середня оцінка";
+    heading_13.innerHTML = "Q11";
 
     let heading_14 = document.createElement("th");
-    heading_14.innerHTML = "Відгук";
+    heading_14.innerHTML = "Середня оцінка";
+
+    let heading_15 = document.createElement("th");
+    heading_15.innerHTML = "Оцінили";
 
     row_1.appendChild(heading_1);
     row_1.appendChild(heading_2);
@@ -188,6 +197,7 @@ function createStatTable() {
     row_1.appendChild(heading_12);
     row_1.appendChild(heading_13);
     row_1.appendChild(heading_14);
+    row_1.appendChild(heading_15);
     thead.appendChild(row_1);
 
     // Creating and adding data to second row of the table
@@ -197,9 +207,12 @@ function createStatTable() {
         json_res.forEach((answer) => {
             console.log(answer);
             comment = [...comment, answer.extra];
+            subject = [...subject, answer.subject];
+            count_stats = [...count_stats, answer.count];
             console.log("avgScores[13] -- " + avgScores[13]);
+            
             document.querySelector("main").appendChild(createComment(comment[avgScores[13]]));
-            addStatsRow(table, answer);
+            addStatsRow(table, answer); 
         });
         addAvgStats(table);
     });
@@ -207,108 +220,116 @@ function createStatTable() {
 
 function addAvgStats(table) {
     let row = table.insertRow(-1);
+    row.className = "bg-warning";
 
     let cell_1 = row.insertCell(0);
-    cell_1.innerHTML = "Середнє";
-    
-    let cell_2 = row.insertCell(1);
+    cell_1.innerHTML = "Середня оцінка";
+
+    let cell_2_1 = row.insertCell(1);
     console.log("avg arr -- " + avgScores);
-    cell_2.innerHTML = round(avgScores[1] / avgScores[13]);
+    cell_2_1.innerHTML = "";
     
-    let cell_3 = row.insertCell(2);
+    let cell_2_2 = row.insertCell(2);
+    console.log("avg arr -- " + avgScores);
+    cell_2_2.innerHTML = round(avgScores[1] / avgScores[13]);
+    
+    let cell_3 = row.insertCell(3);
     cell_3.innerHTML = round(avgScores[2] / avgScores[13]);
 
-    let cell_4 = row.insertCell(3);
+    let cell_4 = row.insertCell(4);
     cell_4.innerHTML = round(avgScores[3] / avgScores[13]); 
     
-    let cell_5 = row.insertCell(4);
+    let cell_5 = row.insertCell(5);
     cell_5.innerHTML = round(avgScores[4] / avgScores[13]);
     
-    let cell_6 = row.insertCell(5);
+    let cell_6 = row.insertCell(6);
     cell_6.innerHTML = round(avgScores[5] / avgScores[13]);
     
-    let cell_7 = row.insertCell(6);
+    let cell_7 = row.insertCell(7);
     cell_7.innerHTML = round(avgScores[6] / avgScores[13]);
     
-    let cell_8 = row.insertCell(7);
+    let cell_8 = row.insertCell(8);
     cell_8.innerHTML = round(avgScores[7] / avgScores[13]);
     
-    let cell_9 = row.insertCell(8);
+    let cell_9 = row.insertCell(9);
     cell_9.innerHTML = round(avgScores[8] / avgScores[13]);
     
-    let cell_10 = row.insertCell(9);
+    let cell_10 = row.insertCell(10);
     cell_10.innerHTML = round(avgScores[9] / avgScores[13]);
     
-    let cell_11 = row.insertCell(10);
+    let cell_11 = row.insertCell(11);
     cell_11.innerHTML = round(avgScores[10] / avgScores[13]);
     
-    let cell_12 = row.insertCell(11);
+    let cell_12 = row.insertCell(12);
     cell_12.innerHTML = round(avgScores[11] / avgScores[13]);
     
-    let cell_13 = row.insertCell(12);
+    let cell_13 = row.insertCell(13);
     cell_13.innerHTML = round(avgScores[12] / avgScores[13]);
+
+    let cell_14 = row.insertCell(14);
 }
 
 function addStatsRow(table, json_one) {
     let row = table.insertRow(1);
 
     let cell_1 = row.insertCell(0);
-    cell_1.innerHTML = "Препод";
-    
+    cell_1.innerHTML = document.getElementById("selectTeacher").value;
+
     let cell_2 = row.insertCell(1);
-    cell_2.innerHTML = json_one.answer1;
+    cell_2.innerHTML = subject[avgScores[13]];
+    
+    let cell_3 = row.insertCell(2);
+    cell_3.innerHTML = json_one.answer1;
     avgScores[1] += json_one.answer1;
     console.log(avgScores[1] + " -- " + json_one.answer1 + " -- " + typeof json_one.answer1);
     
-    let cell_3 = row.insertCell(2);
-    cell_3.innerHTML = json_one.answer2;
+    let cell_4 = row.insertCell(3);
+    cell_4.innerHTML = json_one.answer2;
     avgScores[2] += json_one.answer2;
     
-    let cell_4 = row.insertCell(3);
-    cell_4.innerHTML = json_one.answer3; 
+    let cell_5 = row.insertCell(4);
+    cell_5.innerHTML = json_one.answer3; 
     avgScores[3] += json_one.answer3;
     
-    let cell_5 = row.insertCell(4);
-    cell_5.innerHTML = json_one.answer4;
+    let cell_6 = row.insertCell(5);
+    cell_6.innerHTML = json_one.answer4;
     avgScores[4] += json_one.answer4;
     
-    let cell_6 = row.insertCell(5);
-    cell_6.innerHTML = json_one.answer5;
+    let cell_7 = row.insertCell(6);
+    cell_7.innerHTML = json_one.answer5;
     avgScores[5] += json_one.answer5;
     
-    let cell_7 = row.insertCell(6);
-    cell_7.innerHTML = json_one.answer6;
+    let cell_8 = row.insertCell(7);
+    cell_8.innerHTML = json_one.answer6;
     avgScores[6] += json_one.answer6;
     
-    let cell_8 = row.insertCell(7);
-    cell_8.innerHTML = json_one.answer7;
+    let cell_9 = row.insertCell(8);
+    cell_9.innerHTML = json_one.answer7;
     avgScores[7] += json_one.answer7;
     
-    let cell_9 = row.insertCell(8);
-    cell_9.innerHTML = json_one.answer8;
+    let cell_10 = row.insertCell(9);
+    cell_10.innerHTML = json_one.answer8;
     avgScores[8] += json_one.answer8;
     
-    let cell_10 = row.insertCell(9);
-    cell_10.innerHTML = json_one.answer9;
+    let cell_11 = row.insertCell(10);
+    cell_11.innerHTML = json_one.answer9;
     avgScores[9] += json_one.answer9;
     
-    let cell_11 = row.insertCell(10);
-    cell_11.innerHTML = json_one.answer10;
+    let cell_12 = row.insertCell(11);
+    cell_12.innerHTML = json_one.answer10;
     avgScores[10] += json_one.answer10;
     
-    let cell_12 = row.insertCell(11);
-    cell_12.innerHTML = json_one.answer11;
+    let cell_13 = row.insertCell(12);
+    cell_13.innerHTML = json_one.answer11;
     avgScores[11] += json_one.answer11;
     
-    let cell_13 = row.insertCell(12);
-    cell_13.innerHTML = round(json_one.avg);
+    let cell_14 = row.insertCell(13);
+    cell_14.innerHTML = round(json_one.avg);
     avgScores[12] += json_one.avg;
     avgScores[13] += 1;
 
-    let cell_14 = row.insertCell(13);
-    let divDropdown = createButtonComment(comment[avgScores[13]-1]);
-    console.log(divDropdown);
-    cell_14.appendChild(divDropdown);//comment[avgScores[13]-1]
+    let cell_15 = row.insertCell(14);
+    cell_15.innerHTML = count_stats[avgScores[13]-1];
 }
 
 function createComment(comment) {
@@ -321,52 +342,6 @@ function createComment(comment) {
 
     return divComment;
 }
-
-function createButtonComment(comment){
-    let divDropdown = document.createElement("div");
-    divDropdown.className = "dropdown";
-
-    let buttonComment = document.createElement("button");
-    buttonComment.className = "dropbtn";
-
-    divDropdown.appendChild(buttonComment);
-
-    buttonComment.addEventListener("click",() => {
-        showComment();
-    });
-
-    let dropdown_content = document.createElement("div");
-    dropdown_content.className = "dropdown-content";
-
-    divDropdown.appendChild(dropdown_content);
-
-    let p = document.createElement("p");
-    p.innerText = comment;
-    dropdown_content.appendChild(p);
-
-    return divDropdown;
-}
-
-function showComment() {
-    // document.getElementById("myDropdown").classList.toggle("show");
-    document.querySelectorAll(".dropdown-content").forEach((element) => {
-        element.classList.toggle("show");
-    });
-}
-  
-  // Close the dropdown if the user clicks outside it
-  window.onclick = function(event) {
-    if (!event.target.matches(".dropbtn")) {
-        let dropdowns = document.getElementsByClassName("dropdown-content");
-        let i;
-        for (i = 0; i < dropdowns.length; i++) {
-        let openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains("show")) {
-          openDropdown.classList.remove("show");
-        }
-      }
-    }
-  };
 
 function round(num){
     return Math.floor((num * 100)) / 100;
