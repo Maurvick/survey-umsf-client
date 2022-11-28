@@ -28,6 +28,18 @@ table {
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
+.title_comment {
+    align-items: center;
+    margin: 15px auto;
+    width: 795px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    min-height: 70px;
+    max-width: 795px;
+    font-size: 30px;
+    padding: 10px;
+    overflow-wrap: break-word;
+}
+
 .comment {
     align-items: center;
     border-bottom: rgb(120, 120, 120) 2px solid;

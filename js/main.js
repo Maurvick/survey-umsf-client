@@ -31,6 +31,14 @@ async function getAnswerByLecturer() {
     return await getValuesFetch(url,  encodeURI(params));
 }
 
+async function getCommentByLecturer() {
+    let selectTeacher = document.getElementById("selectTeacher").value;
+
+    let url = "http://localhost:8080/survey/answer/getCommentByLecturer";
+    let params = "?lecturer=" + selectTeacher;
+    return await getValuesFetch(url,  encodeURI(params));
+}
+
 // Get list of subjects from server
 async function getSubjects() {
     let educationLevelSelect = localStorage.getItem("educationLevelSelect");

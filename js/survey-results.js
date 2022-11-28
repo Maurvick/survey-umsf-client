@@ -6,6 +6,12 @@ let avgScores =  [
     0, 0, 0,
     0, 0, 0, 0, 0
 ];
+let countAvg =  [
+    "", 0, 0, 
+    0, 0, 0,
+    0, 0, 0,
+    0, 0, 0
+];
 let comment = [];
 let subject = [];
 let count_stats = [];
@@ -39,6 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
             0, 0, 0,    
             0, 0, 0, 0, 0
         ];
+        countAvg  =  [
+            "", 0, 0, 
+            0, 0, 0,
+            0, 0, 0,    
+            0, 0, 0, 0, 0
+        ];
         comment = [];
         subject = [];
     
@@ -57,18 +69,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Remove old comments
     selectTeacher.addEventListener("change",() => {
-        document.querySelectorAll(".comment").remove();
         if (document.querySelector("table")) {
             document.querySelector("table").remove();
         }
 
-        document.querySelectorAll(".comment").forEach((e) => {
+        document.querySelectorAll(".comment, .title_comment").forEach((e) => {
             e.remove();
         });
         avgScores =  [
             "", 0, 0, 
             0, 0, 0,
             0, 0, 0,
+            0, 0, 0, 0, 0
+        ];
+        countAvg  =  [
+            "", 0, 0, 
+            0, 0, 0,
+            0, 0, 0,    
             0, 0, 0, 0, 0
         ];
         comment = [];
@@ -206,15 +223,31 @@ function createStatTable() {
         console.log(json_res);
         json_res.forEach((answer) => {
             console.log(answer);
-            comment = [...comment, answer.extra];
             subject = [...subject, answer.subject];
-            count_stats = [...count_stats, answer.count];
-            console.log("avgScores[13] -- " + avgScores[13]);
             
-            document.querySelector("main").appendChild(createComment(comment[avgScores[13]]));
+            count_stats = [...count_stats, answer.countAnswers];
+            console.log("avgScores[13] -- " + avgScores[13]);
             addStatsRow(table, answer); 
         });
         addAvgStats(table);
+    });
+
+    getCommentByLecturer().then(res => {
+        let json_res = res; 
+        console.log(json_res);
+
+
+        let temp_title_coment = "";
+        json_res.forEach((answer) => {
+            if(temp_title_coment != answer.subject){
+                let p = document.createElement("p");
+                p.innerText = answer.subject;
+                p.className = "title_comment";
+                temp_title_coment = answer.subject;
+                document.querySelector("main").appendChild(p);
+            }
+            document.querySelector("main").appendChild(createComment(answer.extra));
+        });
     });
 }
 
@@ -231,37 +264,37 @@ function addAvgStats(table) {
     
     let cell_2_2 = row.insertCell(2);
     console.log("avg arr -- " + avgScores);
-    cell_2_2.innerHTML = round(avgScores[1] / avgScores[13]);
+    cell_2_2.innerHTML = round(avgScores[1] / countAvg[1]);
     
     let cell_3 = row.insertCell(3);
-    cell_3.innerHTML = round(avgScores[2] / avgScores[13]);
+    cell_3.innerHTML = round(avgScores[2] / countAvg[2]);
 
     let cell_4 = row.insertCell(4);
-    cell_4.innerHTML = round(avgScores[3] / avgScores[13]); 
+    cell_4.innerHTML = round(avgScores[3] / countAvg[3]); 
     
     let cell_5 = row.insertCell(5);
-    cell_5.innerHTML = round(avgScores[4] / avgScores[13]);
+    cell_5.innerHTML = round(avgScores[4] / countAvg[4]);
     
     let cell_6 = row.insertCell(6);
-    cell_6.innerHTML = round(avgScores[5] / avgScores[13]);
+    cell_6.innerHTML = round(avgScores[5] / countAvg[5]);
     
     let cell_7 = row.insertCell(7);
-    cell_7.innerHTML = round(avgScores[6] / avgScores[13]);
+    cell_7.innerHTML = round(avgScores[6] / countAvg[6]);
     
     let cell_8 = row.insertCell(8);
-    cell_8.innerHTML = round(avgScores[7] / avgScores[13]);
+    cell_8.innerHTML = round(avgScores[7] / countAvg[7]);
     
     let cell_9 = row.insertCell(9);
-    cell_9.innerHTML = round(avgScores[8] / avgScores[13]);
+    cell_9.innerHTML = round(avgScores[8] / countAvg[8]);
     
     let cell_10 = row.insertCell(10);
-    cell_10.innerHTML = round(avgScores[9] / avgScores[13]);
+    cell_10.innerHTML = round(avgScores[9] / countAvg[9]);
     
     let cell_11 = row.insertCell(11);
-    cell_11.innerHTML = round(avgScores[10] / avgScores[13]);
+    cell_11.innerHTML = round(avgScores[10] / countAvg[10]);
     
     let cell_12 = row.insertCell(12);
-    cell_12.innerHTML = round(avgScores[11] / avgScores[13]);
+    cell_12.innerHTML = round(avgScores[11] / countAvg[11]);
     
     let cell_13 = row.insertCell(13);
     cell_13.innerHTML = round(avgScores[12] / avgScores[13]);
@@ -282,47 +315,80 @@ function addStatsRow(table, json_one) {
     let cell_3 = row.insertCell(2);
     cell_3.innerHTML = json_one.answer1;
     avgScores[1] += json_one.answer1;
+    if(json_one.answer1){
+        countAvg[1] += 1;
+    }
     console.log(avgScores[1] + " -- " + json_one.answer1 + " -- " + typeof json_one.answer1);
     
     let cell_4 = row.insertCell(3);
     cell_4.innerHTML = json_one.answer2;
     avgScores[2] += json_one.answer2;
+    if(json_one.answer2){
+        countAvg[2] += 1;
+    }
     
     let cell_5 = row.insertCell(4);
     cell_5.innerHTML = json_one.answer3; 
     avgScores[3] += json_one.answer3;
+    if(json_one.answer3){
+        countAvg[3] += 1;
+    }
     
     let cell_6 = row.insertCell(5);
     cell_6.innerHTML = json_one.answer4;
     avgScores[4] += json_one.answer4;
+    if(json_one.answer4){
+        countAvg[4] += 1;
+    }
     
     let cell_7 = row.insertCell(6);
     cell_7.innerHTML = json_one.answer5;
     avgScores[5] += json_one.answer5;
+    if(json_one.answer5){
+        countAvg[5] += 1;
+    }
     
     let cell_8 = row.insertCell(7);
     cell_8.innerHTML = json_one.answer6;
     avgScores[6] += json_one.answer6;
+    if(json_one.answer6){
+        countAvg[6] += 1;
+    }
     
     let cell_9 = row.insertCell(8);
     cell_9.innerHTML = json_one.answer7;
     avgScores[7] += json_one.answer7;
+    if(json_one.answer7){
+        countAvg[7] += 1;
+    }
     
     let cell_10 = row.insertCell(9);
     cell_10.innerHTML = json_one.answer8;
     avgScores[8] += json_one.answer8;
+    if(json_one.answer8){
+        countAvg[8] += 1;
+    }
     
     let cell_11 = row.insertCell(10);
     cell_11.innerHTML = json_one.answer9;
     avgScores[9] += json_one.answer9;
+    if(json_one.answer9){
+        countAvg[9] += 1;
+    }
     
     let cell_12 = row.insertCell(11);
     cell_12.innerHTML = json_one.answer10;
     avgScores[10] += json_one.answer10;
+    if(json_one.answer10){
+        countAvg[10] += 1;
+    }
     
     let cell_13 = row.insertCell(12);
     cell_13.innerHTML = json_one.answer11;
     avgScores[11] += json_one.answer11;
+    if(json_one.answer11){
+        countAvg[11] += 1;
+    }
     
     let cell_14 = row.insertCell(13);
     cell_14.innerHTML = round(json_one.avg);
