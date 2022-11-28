@@ -1,5 +1,7 @@
+import { sendAnswer } from "./main.js";
+
 // Create lecturer evaluation form
-function createLecturerForm() {
+export function createLecturerForm() {
     // Delete form
     let pageElement = document.querySelector("form");
 

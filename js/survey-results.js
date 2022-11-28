@@ -1,3 +1,6 @@
+import { getAllSpeciality, getLecturersStats, 
+    getAnswerByLecturer, getCommentByLecturer } from "./main.js";
+
 let speciality = [""];
 let lecturer = [""];
 let avgScores =  [
@@ -12,7 +15,7 @@ let countAvg =  [
     0, 0, 0,
     0, 0, 0
 ];
-let comment = [];
+
 let subject = [];
 let count_stats = [];
 
@@ -36,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectTeacher = document.getElementById("selectTeacher");
 
     selectSpeciality.addEventListener("change",() => {
-
         lecturer = [""];
         selectTeacher.innerHTML = "";
         avgScores =  [
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             0, 0, 0,    
             0, 0, 0, 0, 0
         ];
-        comment = [];
+        
         subject = [];
     
         getLecturersStats().then(res => {
@@ -88,10 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
             0, 0, 0,    
             0, 0, 0, 0, 0
         ];
-        comment = [];
         subject = [];
     });
 
+    // Create new table
     stats();
 });
 
@@ -106,8 +108,6 @@ sectors.forEach((e) => e.addEventListener("change",(event) => {
     if(!localStorage.getItem("items")){
         localStorage.setItem(element_id, event.target.value);
     }
-    
-    checkStorage();
     
     console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
 }));
@@ -236,14 +236,13 @@ function createStatTable() {
         let json_res = res; 
         console.log(json_res);
 
-
-        let temp_title_coment = "";
+        let temp_title_comment = "";
         json_res.forEach((answer) => {
-            if(temp_title_coment != answer.subject){
+            if (temp_title_comment !== answer.subject){
                 let p = document.createElement("p");
                 p.innerText = answer.subject;
                 p.className = "title_comment";
-                temp_title_coment = answer.subject;
+                temp_title_comment = answer.subject;
                 document.querySelector("main").appendChild(p);
             }
             document.querySelector("main").appendChild(createComment(answer.extra));
@@ -410,6 +409,6 @@ function createComment(comment) {
     return divComment;
 }
 
-function round(num){
+function round(num) {
     return Math.floor((num * 100)) / 100;
 }
