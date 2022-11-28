@@ -266,7 +266,8 @@ function addAvgStats(table) {
     let cell_13 = row.insertCell(13);
     cell_13.innerHTML = round(avgScores[12] / avgScores[13]);
 
-    let cell_14 = row.insertCell(14);
+    // cell_14
+    row.insertCell(14);
 }
 
 function addStatsRow(table, json_one) {

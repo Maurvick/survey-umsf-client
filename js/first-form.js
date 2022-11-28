@@ -243,8 +243,8 @@ let createDisciplineSelectBox = function f1() {
 };
 
 function checkPassedDiscipline(discipline){
-    disciplines = JSON.parse(localStorage.getItem("passedSubjects"));
-    if(!disciplines || discipline.length == 0){
+    let disciplines = JSON.parse(localStorage.getItem("passedSubjects"));
+    if(!disciplines || discipline.length === 0){
         return false;
     }
     for (let index = 0; index < disciplines.length; index++) {
