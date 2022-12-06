@@ -16,22 +16,22 @@
     },
     "rules": {
         "linebreak-style": [
-            "warn",
+            "error",
             "windows"
         ],
         "quotes": [
-            "warn",
+            "error",
             "double"
         ],
         "semi": [
-            "warn",
+            "error",
             "always"
         ],
         "no-undef" : [
-            "off"
+            "warn"
         ],
         "no-unused-vars" : [
-            "off"
+            "warn"
         ],
         "no-var" : [
             "warn"

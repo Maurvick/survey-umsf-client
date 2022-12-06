@@ -1,3 +1,7 @@
+import { getAllEducationLevel, getAllEducationalForm, getAllYear,
+        getSubjects, getLecturers, getAllSpeciality } from "./main.js";
+import { createLecturerForm } from "./second-form.js";
+
 let educationLevel = [""];
 let years =  [""];
 let educationalForm = [""];
