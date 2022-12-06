@@ -1,29 +1,29 @@
 // Get list of values for educationLevelSelect
-async function getAllEducationLevel() {
+export async function getAllEducationLevel() {
     let url = "http://localhost:8080/survey/subject/all/educationLevel";
     return await getValuesFetch(url);
 }
 
 // Get list of values for educationalFormSelect
-async function getAllEducationalForm() {
+export async function getAllEducationalForm() {
     let url = "http://localhost:8080/survey/subject/all/educationalForm";
     return await getValuesFetch(url);
 }
 
 // Get list of values for yearSelect
-async function getAllYear() {
+export async function getAllYear() {
     let url = "http://localhost:8080/survey/subject/all/year";
     return await getValuesFetch(url);
 }
 
 // Get list of values for selectDiscipline
-async function getAllSpeciality() {
+export async function getAllSpeciality() {
     let url = "http://localhost:8080/survey/subject/all/speciality";
     return await getValuesFetch(url);
 }
 
 // Get list of values for selectTeacher
-async function getAnswerByLecturer() {
+export async function getAnswerByLecturer() {
     let selectTeacher = document.getElementById("selectTeacher").value;
 
     let url = "http://localhost:8080/survey/answer/getByLecturer";
@@ -31,7 +31,7 @@ async function getAnswerByLecturer() {
     return await getValuesFetch(url,  encodeURI(params));
 }
 
-async function getCommentByLecturer() {
+export async function getCommentByLecturer() {
     let selectTeacher = document.getElementById("selectTeacher").value;
 
     let url = "http://localhost:8080/survey/answer/getCommentByLecturer";
@@ -40,7 +40,7 @@ async function getCommentByLecturer() {
 }
 
 // Get list of subjects from server
-async function getSubjects() {
+export async function getSubjects() {
     let educationLevelSelect = localStorage.getItem("educationLevelSelect");
     let yearSelect =localStorage.getItem("yearSelect");
     let educationalFormSelect = localStorage.getItem("educationalFormSelect");
@@ -56,7 +56,7 @@ async function getSubjects() {
 }
 
 // Get list of lecturers from server
-async function getLecturers() {
+export async function getLecturers() {
     let educationLevelSelect = localStorage.getItem("educationLevelSelect");
     let yearSelect = localStorage.getItem("yearSelect");
     let educationalFormSelect = localStorage.getItem("educationalFormSelect");
@@ -74,8 +74,8 @@ async function getLecturers() {
     return await getValuesFetch(url, encodeURI(params), false);
 }
 
-// Get list of disciplines from server for statistics
-async function getSubjectsStats() {
+// (UNUSED) Get list of disciplines from server for statistics
+export async function getSubjectsStats() {
     let specialitySelect = document.getElementById("specialitySelect").value;
 
     let url = "http://localhost:8080/survey/subject/getSubjectStatsByParams";
@@ -87,7 +87,7 @@ async function getSubjectsStats() {
 }
 
 // Get list of lecturers from server for statistics
-async function getLecturersStats() {
+export async function getLecturersStats() {
     let specialitySelect = document.getElementById("specialitySelect").value;
 
 	let url = "http://localhost:8080/survey/subject/getLecturerStatsByParams";
@@ -99,7 +99,7 @@ async function getLecturersStats() {
 }
 
 // Get values from server
-async function getValuesFetch(url, params = "") {
+export async function getValuesFetch(url, params = "") {
     console.log(url + params);
     url += params;
 
@@ -121,7 +121,7 @@ async function getValuesFetch(url, params = "") {
 }
 
 // Read answers from second-form.js select boxes
-async function sendAnswer() {
+export async function sendAnswer() {
     let answer = {
         answer1:1,
         answer2:2,
@@ -161,7 +161,7 @@ async function sendAnswer() {
 }
 
 // Get json from server
-async function sendJsonFetch(url, json) {
+export async function sendJsonFetch(url, json) {
     console.log("JSON.stringify(json) -- " + JSON.stringify(json));
 
     let response = await fetch(url, {

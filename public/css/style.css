@@ -96,4 +96,6 @@ table {
     display: block;
 }
 
-.show {display: block;}
+.show { 
+    display: block;
+}
