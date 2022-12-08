@@ -1,24 +1,25 @@
+
 // Get list of values for educationLevelSelect
 export async function getAllEducationLevel() {
-    let url = "http://localhost:8080/survey/subject/all/educationLevel";
+    let url = server.API_URL + "survey/subject/all/educationLevel";
     return await getValuesFetch(url);
 }
 
 // Get list of values for educationalFormSelect
 export async function getAllEducationalForm() {
-    let url = "http://localhost:8080/survey/subject/all/educationalForm";
+    let url =  server.API_URL + "survey/subject/all/educationalForm";
     return await getValuesFetch(url);
 }
 
 // Get list of values for yearSelect
 export async function getAllYear() {
-    let url = "http://localhost:8080/survey/subject/all/year";
+    let url =  server.API_URL + "survey/subject/all/year";
     return await getValuesFetch(url);
 }
 
 // Get list of values for selectDiscipline
 export async function getAllSpeciality() {
-    let url = "http://localhost:8080/survey/subject/all/speciality";
+    let url =  server.API_URL + "survey/subject/all/speciality";
     return await getValuesFetch(url);
 }
 
@@ -26,7 +27,7 @@ export async function getAllSpeciality() {
 export async function getAnswerByLecturer() {
     let selectTeacher = document.getElementById("selectTeacher").value;
 
-    let url = "http://localhost:8080/survey/answer/getByLecturer";
+    let url =  server.API_URL + "survey/answer/getByLecturer";
     let params = "?lecturer=" + selectTeacher;
     return await getValuesFetch(url,  encodeURI(params));
 }
@@ -34,7 +35,7 @@ export async function getAnswerByLecturer() {
 export async function getCommentByLecturer() {
     let selectTeacher = document.getElementById("selectTeacher").value;
 
-    let url = "http://localhost:8080/survey/answer/getCommentByLecturer";
+    let url =  server.API_URL + "survey/answer/getCommentByLecturer";
     let params = "?lecturer=" + selectTeacher;
     return await getValuesFetch(url,  encodeURI(params));
 }
@@ -46,7 +47,7 @@ export async function getSubjects() {
     let educationalFormSelect = localStorage.getItem("educationalFormSelect");
     let specialitySelect = localStorage.getItem("specialitySelect");
 
-    let url = "http://localhost:8080/survey/subject/getSubjectByParams";
+    let url =  server.API_URL + "survey/subject/getSubjectByParams";
     let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
         "&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
 
@@ -63,7 +64,7 @@ export async function getLecturers() {
     let specialitySelect = localStorage.getItem("specialitySelect");
     let selectDiscipline = document.getElementById("selectDiscipline").value;
 
-    let url = "http://localhost:8080/survey/subject/getLecturerByParams";
+    let url =  server.API_URL + "survey/subject/getLecturerByParams";
     let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
         "&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect +
         "&title=" + selectDiscipline;
@@ -78,7 +79,7 @@ export async function getLecturers() {
 export async function getSubjectsStats() {
     let specialitySelect = document.getElementById("specialitySelect").value;
 
-    let url = "http://localhost:8080/survey/subject/getSubjectStatsByParams";
+    let url =  server.API_URL + "survey/subject/getSubjectStatsByParams";
     let params = "?speciality=" + specialitySelect;
 
     console.log("getSubjectsStats() is working...");
@@ -90,7 +91,7 @@ export async function getSubjectsStats() {
 export async function getLecturersStats() {
     let specialitySelect = document.getElementById("specialitySelect").value;
 
-	let url = "http://localhost:8080/survey/subject/getLecturerStatsByParams";
+	let url =  server.API_URL + "survey/subject/getLecturerStatsByParams";
 	let params = "?speciality=" + specialitySelect;
 
     console.log("getLecturersStats() is working... , url: " + url + params);
@@ -108,7 +109,7 @@ export async function getValuesFetch(url, params = "") {
         mode: "cors",
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin" :"http://localhost:8080/",
+            "Access-Control-Allow-Origin" : server.API_URL + "",
             "Access-Control-Allow-Credentials":"true"
         }
     });
@@ -155,7 +156,7 @@ export async function sendAnswer() {
     answer.extra = document.getElementById("comment").value;
     
 
-    let url = "http://localhost:8080/survey/answer/send";
+    let url =  server.API_URL + "survey/answer/send";
 
     return await sendJsonFetch(url, answer);
 }
@@ -169,7 +170,7 @@ export async function sendJsonFetch(url, json) {
         mode: "cors",
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin" :"http://localhost:8080/",
+            "Access-Control-Allow-Origin" : server.API_URL + "",
             "Access-Control-Allow-Credentials":"true"
         },
         body: JSON.stringify(json)
