@@ -337,16 +337,15 @@ export function createLecturerForm() {
         } 
         sendAnswer().then(resp => { 
             if (resp.status === 200) {
+                subjects.push(disciplineSelect);
+                localStorage.setItem("passedSubjects",JSON.stringify(subjects));
                 alert("Дякуємо за оцінку!");
+                location.reload();
             }
         }).catch((error) => {
             console.error(error);
             alert("Что-то пошло не так!");
             location.reload();
         });
-        
-        subjects.push(disciplineSelect);
-        localStorage.setItem("passedSubjects",JSON.stringify(subjects));
-        location.reload();
     };
 }
