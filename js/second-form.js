@@ -322,7 +322,7 @@ export function createLecturerForm() {
     let buttonSubmit = document.createElement("button");
     
     buttonSubmit.className = "btn btn-primary btn-lg btn-block";
-    buttonSubmit.setAttribute("type","submit");
+    buttonSubmit.setAttribute("type","button");
     buttonSubmit.innerText = "Відправити";
     
     form.appendChild(buttonSubmit);
@@ -340,11 +340,11 @@ export function createLecturerForm() {
                 subjects.push(disciplineSelect);
                 localStorage.setItem("passedSubjects",JSON.stringify(subjects));
                 alert("Дякуємо за оцінку!");
-                location.reload();
             }
         }).catch((error) => {
-            console.error(error);
+            console.error(error + " -- " + error.message);
             alert("Что-то пошло не так!");
+        }).finally(() => {
             location.reload();
         });
     };
