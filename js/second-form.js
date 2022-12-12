@@ -346,9 +346,7 @@ export function createLecturerForm() {
         });
         
         subjects.push(disciplineSelect);
-        console.log(subjects);
         localStorage.setItem("passedSubjects",JSON.stringify(subjects));
-        alert(subjects.length + " -- " + localStorage.getItem("passedSubjects"));
         location.reload();
     };
 }

@@ -51,8 +51,6 @@ export async function getSubjects() {
     let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
         "&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect;
 
-    console.log("getSubjects() is working...");
-
     return await getValuesFetch(url, encodeURI(params), false);
 }
 
@@ -68,10 +66,6 @@ export async function getLecturers() {
     let params = "?educationLevel=" + educationLevelSelect + "&year=" + yearSelect +
         "&educationalForm=" + educationalFormSelect + "&speciality=" + specialitySelect +
         "&title=" + selectDiscipline;
-
-    console.log("getLecturers() is working... , url: " + url + params);
-
-
     return await getValuesFetch(url, encodeURI(params), false);
 }
 
@@ -81,8 +75,6 @@ export async function getSubjectsStats() {
 
     let url =  server.API_URL + "survey/subject/getSubjectStatsByParams";
     let params = "?speciality=" + specialitySelect;
-
-    console.log("getSubjectsStats() is working...");
 
     return await getValuesFetch(url, encodeURI(params), false);
 }
@@ -94,14 +86,11 @@ export async function getLecturersStats() {
 	let url =  server.API_URL + "survey/subject/getLecturerStatsByParams";
 	let params = "?speciality=" + specialitySelect;
 
-    console.log("getLecturersStats() is working... , url: " + url + params);
-
     return await getValuesFetch(url, encodeURI(params), false);
 }
 
 // Get values from server
 export async function getValuesFetch(url, params = "") {
-    console.log(url + params);
     url += params;
 
     let response = await fetch(url, {
@@ -163,8 +152,6 @@ export async function sendAnswer() {
 
 // Get json from server
 export async function sendJsonFetch(url, json) {
-    console.log("JSON.stringify(json) -- " + JSON.stringify(json));
-
     let response = await fetch(url, {
         method: "POST",
         mode: "cors",

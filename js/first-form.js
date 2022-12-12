@@ -36,16 +36,11 @@ if (!localStorage.getItem("teacherSelect")) {
 
 // Print local storage values
 function checkStorage() {
-    console.log("Сейчас обрабатывается рендер educationLevelSelect--" +
-    localStorage.getItem("educationLevelSelect") + " yearSelect--" +
-    localStorage.getItem("yearSelect") + " educationalFormSelect--" +
-    localStorage.getItem("educationalFormSelect") + " specialitySelect--"  +
-    localStorage.getItem("specialitySelect"));
+
 }
 
 // Set local storage values after page reload
 let sectors = document.querySelectorAll(".form-group");
-console.log(sectors);
 
 sectors.forEach((e) => e.addEventListener("change",(event) => {
     let element_id = e.querySelector("select").id;
@@ -53,9 +48,6 @@ sectors.forEach((e) => e.addEventListener("change",(event) => {
     if(!localStorage.getItem("items")) {
         localStorage.setItem(element_id, event.target.value);
     }
-    checkStorage();
-    
-    console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
 }));
 
 // Add values for educationLevel select box
@@ -73,7 +65,6 @@ function educationLevelFill() {
             option.text = educationLevel[i];
             educationLevelSelect.appendChild(option);
         }
-        console.log(localStorage.getItem("educationLevelSelect"));
         if (localStorage.getItem("educationLevelSelect")) {
             educationLevelSelect.value = localStorage.getItem("educationLevelSelect");
         }
@@ -165,15 +156,12 @@ function paramsCheck() {
         localStorage.getItem("yearSelect") !== ""  &&
         localStorage.getItem("educationalFormSelect") !== ""  &&
         localStorage.getItem("specialitySelect") !== "") {
-        console.log("Checking entered values...");
 
         getSubjects().then(res => {
             subject = [""];
             for (const iterator of res) {
                 subject = [...subject, iterator.title];
             }
-
-            console.log(subject);
             createDisciplineSelectBox(subject);
         });
     }
@@ -203,14 +191,11 @@ let createDisciplineSelectBox = function f1() {
         let valueDiscipline = document.getElementById("selectDiscipline");
 
         localStorage.setItem("disciplineSelect",valueDiscipline.value);
-        console.log(localStorage.getItem("disciplineSelect"));
         getLecturers().then(res => {
             lecturer = [""];
             for (const iterator of res) {
                 lecturer = [...lecturer, iterator.lecturer];
             }
-
-            console.log(res);
             createTeacherSelectBox(lecturer);
         });
     });
@@ -253,7 +238,6 @@ function checkPassedDiscipline(discipline){
     }
     for (let index = 0; index < disciplines.length; index++) {
         const element = disciplines[index];
-        console.log( "element -- " + element);
         if(element === discipline){
             return true;
         }
@@ -286,7 +270,6 @@ let createTeacherSelectBox = function f2() {
         let valueTeacher = document.getElementById("selectTeacher");
 
         localStorage.setItem("teacherSelect",valueTeacher.value);
-        console.log(localStorage.getItem("teacherSelect"));
     });
 
     divTeachers.appendChild(selectTeacher);

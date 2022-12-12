@@ -100,16 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // Local storage 
 let sectors = document.querySelectorAll(".form-group");
 
-console.log(sectors);
-
 sectors.forEach((e) => e.addEventListener("change",(event) => {
     let element_id = e.querySelector("select").id;
     
     if(!localStorage.getItem("items")){
         localStorage.setItem(element_id, event.target.value);
     }
-    
-    console.log("educationLevelSelect -- " + localStorage.getItem("educationLevelSelect"));
 }));
 
 // Survey results
@@ -220,13 +216,10 @@ function createStatTable() {
     // Creating and adding data to second row of the table
     getAnswerByLecturer().then(res => {
         let json_res = res; 
-        console.log(json_res);
         json_res.forEach((answer) => {
-            console.log(answer);
             subject = [...subject, answer.subject];
             
             count_stats = [...count_stats, answer.countAnswers];
-            console.log("avgScores[13] -- " + avgScores[13]);
             addStatsRow(table, answer); 
         });
         addAvgStats(table);
@@ -234,7 +227,6 @@ function createStatTable() {
 
     getCommentByLecturer().then(res => {
         let json_res = res; 
-        console.log(json_res);
 
         let temp_title_comment = "";
         json_res.forEach((answer) => {
@@ -258,11 +250,9 @@ function addAvgStats(table) {
     cell_1.innerHTML = "Середня оцінка";
 
     let cell_2_1 = row.insertCell(1);
-    console.log("avg arr -- " + avgScores);
     cell_2_1.innerHTML = "";
     
     let cell_2_2 = row.insertCell(2);
-    console.log("avg arr -- " + avgScores);
     cell_2_2.innerHTML = round(avgScores[1] / countAvg[1]);
     
     let cell_3 = row.insertCell(3);
@@ -317,7 +307,6 @@ function addStatsRow(table, json_one) {
     if(json_one.answer1){
         countAvg[1] += 1;
     }
-    console.log(avgScores[1] + " -- " + json_one.answer1 + " -- " + typeof json_one.answer1);
     
     let cell_4 = row.insertCell(3);
     cell_4.innerHTML = json_one.answer2;
