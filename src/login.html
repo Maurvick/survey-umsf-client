@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="description" content="Log in to the statistics page">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+      <title>Login</title>
+      
+      <link rel="icon" type="image/x-icon" href="img/favicon.png">
+      <link rel="stylesheet" href="css/bootstrap.css">
+      <link rel="stylesheet" href="css/signin.css">
+
+      <script type="module" src="js/main.js"></script>
+      <script type="module" src="js/login.js"></script>
+  </head>
+
+  <body>
+      <div class="container">
+          <form class="form-signin" method="post" action="http://localhost:8080/login">
+              <h2 class="form-signin-heading">Будь ласка, авторизуйтесь</h2>
+              
+              <p>
+                  <label for="username" class="sr-only">Логін</label>
+                  <input type="text" id="username" name="username" 
+                  class="form-control" placeholder="Логін" required autofocus>
+              </p>
+              
+              <p>
+                  <label for="password" class="sr-only">Пароль</label>
+                  <input type="password" id="password" name="password" 
+                  class="form-control" placeholder="Пароль" required>
+              </p>
+              
+              <input name="_csrf" 
+                type="hidden" value="e9878350-cbe7-45e8-98a8-e4ce9b29c95e">
+              
+              <button class="btn btn-lg btn-primary btn-block" 
+                type="button" onclick="authorization()">Відправити</button>
+          </form>
+      </div>
+  </body>
+</html>
