@@ -1,0 +1,4 @@
+# Do not format js packages 
+# and html files
+node_modules
+*.html
