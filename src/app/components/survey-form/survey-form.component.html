@@ -1,0 +1,189 @@
+<div>
+  <!-- <h3 id="pageCount">Сторінка {{ currentStep }}/3</h3> -->
+</div>
+
+<div>
+  <h2>Опитування УМСФ</h2>
+  <hr />
+</div>
+
+<div>
+  <p>
+    Шановні здобувачі вищої освіти, просимо вас оцінити викладання дисциплін в
+    УМСФ для покращення якості освітнього процесу за вашою освітньою програмою.
+  </p>
+  <p>
+    Необхідно оцінити всіх викладачів, після оцінення, викладач зникає зі
+    списку.
+  </p>
+  <p>Усі анкети анонімні.</p>
+
+  <hr />
+</div>
+
+<form [formGroup]="surveyForm">
+  <div *ngIf="!firstPageCompleted">
+    <app-survey-select-box
+      [arr]="educationLevelOptions"
+      [key]="'educationLevel'"
+      formControlName="educationLevel"
+    >
+      Освітній рівень
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="getEducationalFormValues()"
+      [key]="'educationalForm'"
+      formControlName="educationalForm"
+      >Форма навчання</app-survey-select-box
+    >
+
+    <app-survey-select-box
+      [arr]="educationStartYearOptions"
+      [key]="'year'"
+      formControlName="year"
+      >Рік набору</app-survey-select-box
+    >
+
+    <app-survey-select-box
+      [arr]="educationSpecialtyOptions"
+      [key]="'speciality'"
+      formControlName="speciality"
+      >Освітня програма</app-survey-select-box
+    >
+
+    <div *ngIf="isFirstFourQuestionsAnswered()">
+      <!--Place a placeholder until data is properly loaded-->
+      <div *ngIf="!disciplineDataLoaded">
+        <app-loader></app-loader>
+      </div>
+      <div *ngIf="disciplineDataLoaded">
+        <app-survey-select-box
+          [arr]="educationDisciplineOptions"
+          [key]="'title'"
+          formControlName="title"
+          >Дисципліна</app-survey-select-box
+        >
+      </div>
+      <div *ngIf="isDisciplineQuestionsAnswered()">
+        <div *ngIf="!lecturerDataLoaded">
+          <app-loader></app-loader>
+        </div>
+        <div *ngIf="lecturerDataLoaded">
+          <app-survey-select-box
+            [arr]="educationLecturersOptions"
+            [key]="'lecturer'"
+            formControlName="lecturer"
+            >Викладач</app-survey-select-box
+          >
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isAllQuestionsAnswered()">
+      <button (click)="onSubmit()" type="submit">Підтвердити</button>
+    </div>
+  </div>
+
+  <div *ngIf="firstPageCompleted">
+    <!--TODO: Create lecturer form-->
+    <h2>Оцініть характеристики викладача</h2>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'competence'"
+      formControlName="competence"
+    >
+      1. Викладач компетентний у дисципліні та вільно володіє теоретичним
+      матеріалом
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'knowledge'"
+      formControlName="knowledge"
+    >
+      2. Викладає матеріал логічно та зрозуміло
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'practicality'"
+      formControlName="practicality"
+    >
+      3. Викладач достатньо використовує практичні приклади під час занять
+    </app-survey-select-box>
+
+    <app-survey-select-box [arr]="rate" [key]="'tools'" formControlName="tools">
+      4. Викладач використовує мультимедійні засоби навчання (презентації,
+      електронні лекції тощо)
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'communication'"
+      formControlName="communication"
+    >
+      5. Викладач налагоджує партнерські стосунки зі студентами, підтримує
+      зворотній зв'язок
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'Informativeness'"
+      formControlName="Informativeness"
+    >
+      6. Викладач на початку семестру інформує про форми контролю
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'objectivity'"
+      formControlName="objectivity"
+    >
+      7. Викладач об'єктивно оцінює знання студентів
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'classroom'"
+      formControlName="classroom"
+    >
+      8. Викладач забезпечує студентів навчальними матеріалами на платформі
+      Google Classroom
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'conferences'"
+      formControlName="conferences"
+    >
+      9. Викладач проводить заняття за розкладом з використанням Zoom, Meet,
+      Skype чи інших програм для онлайн-конференцій
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'friendliness'"
+      formControlName="friendliness"
+    >
+      10. Викладач тактовний і доброзичливий зі студентами
+    </app-survey-select-box>
+
+    <app-survey-select-box
+      [arr]="rate"
+      [key]="'preferences'"
+      formControlName="preferences"
+    >
+      11. Хотів(-ла) б вивчати інші дисципліни саме з цим викладачем
+    </app-survey-select-box>
+
+    <label>12. Ваші побажання щодо покращення викладання цієї дисципліни</label>
+    <textarea formControlName="comment"></textarea>
+
+    <button>Підтвердити</button>
+    <!--TODO: localStorage feature-->
+    <!--TODO: Create results form (with auth)-->
+    <!--TODO: Show survey progress-->
+  </div>
+</form>

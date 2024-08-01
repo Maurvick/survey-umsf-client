@@ -1,0 +1,22 @@
+.container {
+  display: "flex";
+  justify-content: "center";
+  margin-top: 5;
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+  border: 3px dashed slategray;
+  border-radius: 50%;
+  animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.4);
+  }
+}

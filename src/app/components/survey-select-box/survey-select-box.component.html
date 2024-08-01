@@ -1,0 +1,24 @@
+<!-- Be advised that this component element structure 
+changes dynamically by its directives, so it can overwrite
+mounted components -->
+<div class="form-control">
+  <label for="{{ key }}"><ng-content></ng-content></label>
+  <div *ngIf="hasObject()">
+    <!-- If select is separated with div element for 
+     option element it the select options will not load -->
+    <select (change)="handleChange($event)" id="{{ key }}">
+      <option value=""></option>
+      <option *ngFor="let obj of arr">
+        {{ obj[key] }}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="!hasObject()">
+    <select (change)="handleChange($event)" id="{{ key }}">
+      <option value=""></option>
+      <option *ngFor="let item of arr">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+</div>
