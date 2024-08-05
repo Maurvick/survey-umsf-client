@@ -1,0 +1,52 @@
+.sticky-header {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sticky-header h1 {
+  margin: 0;
+}
+
+.sticky-header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.sticky-header nav ul li {
+  margin-left: 20px;
+}
+
+.sticky-header nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.sticky-header nav ul li a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 40px;
+}
