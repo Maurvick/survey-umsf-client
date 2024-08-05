@@ -67,8 +67,8 @@ export class SurveyService {
     return this.http.get<Survey[]>(apiUrl, { params });
   }
 
-  postAnswer(answer: Survey) {
-    let apiUrl = environment.baseUrl + '/survey/answer';
-    return this.http.put(apiUrl, answer);
+  postAnswer(answer: object) {
+    let apiUrl = environment.baseUrl + '/survey/answer/send';
+    return this.http.post(apiUrl, answer);
   }
 }

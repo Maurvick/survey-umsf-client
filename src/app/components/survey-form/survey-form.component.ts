@@ -1,13 +1,22 @@
 import { forkJoin } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  Renderer2,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { filterObjectPropertyByKey } from '../../../utils/utils';
 import { Survey } from '../../services/survey-service/survey.model';
 import { SurveyService } from '../../services/survey-service/survey.service';
+import { HeaderComponent } from '../header/header.component';
 import { LoaderComponent } from '../loader/loader.component';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { SurveySelectBoxComponent } from '../survey-select-box/survey-select-box.component';
 
 @Component({
@@ -18,36 +27,49 @@ import { SurveySelectBoxComponent } from '../survey-select-box/survey-select-box
     ReactiveFormsModule,
     SurveySelectBoxComponent,
     LoaderComponent,
+    ProgressBarComponent,
+    HeaderComponent,
   ],
   templateUrl: './survey-form.component.html',
   styleUrl: './survey-form.component.css',
 })
 export class SurveyFormComponent implements OnInit, OnChanges {
-  educationLevelOptions: Survey[] = [];
-  educationalFormOptions: Survey[] = [];
-  educationStartYearOptions: Survey[] = [];
-  educationSpecialtyOptions: Survey[] = [];
+  educationLevelArr: Survey[] = [];
+  educationalFormArr: Survey[] = [];
+  educationStartYearArr: Survey[] = [];
+  educationSpecialtyArr: Survey[] = [];
 
-  educationDisciplineOptions: Survey[] = [];
-  educationLecturersOptions: Survey[] = [];
+  educationDisciplineArr: Survey[] = [];
+  educationLecturersArr: Survey[] = [];
 
   disciplineOptionsLoaded: boolean = false;
   lecturerOptionsLoaded: boolean = false;
 
   disciplineDataLoaded: boolean = false;
   lecturerDataLoaded: boolean = false;
+  formValuesChanged: boolean = false;
+  currentObjValues: any;
 
   firstPageCompleted: boolean = false;
 
   errorMessage: string = '';
   rate: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-  // currentStep: number = 1;
 
   surveyForm!: FormGroup;
-
+  totalInputs: number = 0;
+  completedInputs: number = 0;
   // selectValues: { [key: string]: string } = {};
 
-  constructor(private surveyService: SurveyService, private fb: FormBuilder) {
+  get progress() {
+    return Math.ceil((this.completedInputs / this.totalInputs) * 100);
+  }
+
+  constructor(
+    private surveyService: SurveyService,
+    private fb: FormBuilder,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
     this.surveyForm = this.fb.group({
       educationLevel: '',
       educationalForm: '',
@@ -55,20 +77,56 @@ export class SurveyFormComponent implements OnInit, OnChanges {
       speciality: '',
       title: '',
       lecturer: '',
+      competence: '',
+      knowledge: '',
+      practicality: '',
+      tools: '',
+      communication: '',
+      informativeness: '',
+      objectivity: '',
+      classroom: '',
+      conferences: '',
+      friendliness: '',
+      preferences: '',
+      comment: '',
     });
+    this.totalInputs = Object.keys(this.surveyForm.controls).length;
   }
 
   // TODO: Update loaded data based on answers
   ngOnInit(): void {
+    this.fetchFirstFourOptions();
     this.surveyForm.valueChanges.subscribe(() => {
+      // this.formValuesChanged = true;
+      this.updateProgress();
+      // if (
+      //   this.isEducationLevelQuestionsAnswered() &&
+      //   this.isEducationFormQuestionsAnswered() &&
+      //   this.isEducationStartYearQuestionsAnswered() &&
+      //   this.isEducationSpecialtyQuestionsAnswered()
+      // ) {
+      //   if (this.currentObjValues != Object.values(this.surveyForm.controls)) {
+      //     // Lecturer option is based on discipline values
+      //     this.fetchDiscipline();
+      //     this.fetchLecturers();
+      //     this.currentObjValues = Object.values(this.surveyForm.controls);
+      //   }
+      // }
       this.checkIfDisciplineLoaded();
       this.checkIfLecturerLoaded();
     });
-    this.fetchFirstFourOptions();
   }
 
   ngOnChanges(changes: SimpleChanges): void {}
 
+  updateProgress() {
+    this.completedInputs = this.getFormControlsCountWithValues();
+  }
+
+  /**
+   * Fetches data for `getSubjectByEducationLevel()`, `getSubjectByEducationForm()`,
+   * `getSubjectByYear()` and `getSubjectBySpecialty()`
+   */
   fetchFirstFourOptions(): void {
     forkJoin([
       this.surveyService.getSubjectByEducationLevel(),
@@ -82,10 +140,10 @@ export class SurveyFormComponent implements OnInit, OnChanges {
         educationStartYearArr,
         educationSpecialtyArr,
       ]) => {
-        this.educationLevelOptions = educationLevelArr;
-        this.educationalFormOptions = educationalFormArr;
-        this.educationStartYearOptions = educationStartYearArr;
-        this.educationSpecialtyOptions = educationSpecialtyArr;
+        this.educationLevelArr = educationLevelArr;
+        this.educationalFormArr = educationalFormArr;
+        this.educationStartYearArr = educationStartYearArr;
+        this.educationSpecialtyArr = educationSpecialtyArr;
       },
       error: (error: Error) => {
         this.errorMessage = error.message;
@@ -106,7 +164,15 @@ export class SurveyFormComponent implements OnInit, OnChanges {
       )
       .subscribe({
         next: (data) => {
-          this.educationDisciplineOptions = data;
+          this.educationDisciplineArr = data;
+          console.log(
+            'sent:',
+            this.surveyForm.get('educationLevel')?.value,
+            this.surveyForm.get('educationalForm')?.value,
+            this.surveyForm.get('year')?.value,
+            this.surveyForm.get('speciality')?.value
+          );
+          console.log('received: ', data);
         },
         error: (error) => {
           console.log(error);
@@ -128,7 +194,7 @@ export class SurveyFormComponent implements OnInit, OnChanges {
       )
       .subscribe({
         next: (data) => {
-          this.educationLecturersOptions = data;
+          this.educationLecturersArr = data;
         },
         error: (error) => {
           console.log(error);
@@ -143,87 +209,127 @@ export class SurveyFormComponent implements OnInit, OnChanges {
   //   this.selectValues[event.id] = event.value;
   // }
 
-  isFirstFourQuestionsAnswered(): boolean {
-    // ! due to angular detection mechanism triggers, this method will called multiple times
-    // ! avoid resource heavy operations like fetching data when using structural directives
-    return (
-      this.surveyForm.get('educationLevel')?.value &&
-      this.surveyForm.get('educationalForm')?.value &&
-      this.surveyForm.get('year')?.value &&
-      this.surveyForm.get('speciality')?.value
-    );
+  // ! due to angular detection mechanism triggers, this method will called multiple times
+  // ! avoid resource heavy operations like fetching data when using structural directives
+
+  isEducationLevelQuestionsAnswered(): boolean {
+    return !!this.surveyForm.get('educationLevel')?.value;
+  }
+
+  isEducationFormQuestionsAnswered(): boolean {
+    return !!this.surveyForm.get('educationalForm')?.value;
+  }
+
+  isEducationStartYearQuestionsAnswered(): boolean {
+    return !!this.surveyForm.get('year')?.value;
+  }
+
+  isEducationSpecialtyQuestionsAnswered(): boolean {
+    return !!this.surveyForm.get('speciality')?.value;
   }
 
   isDisciplineQuestionsAnswered(): boolean {
-    return this.surveyForm.get('title')?.value;
+    return !!this.surveyForm.get('title')?.value;
   }
 
-  isAllQuestionsAnswered(): boolean {
-    return (
-      this.surveyForm.get('educationLevel')?.value &&
-      this.surveyForm.get('educationalForm')?.value &&
-      this.surveyForm.get('year')?.value &&
-      this.surveyForm.get('speciality')?.value &&
-      this.surveyForm.get('title')?.value &&
-      this.surveyForm.get('lecturer')?.value
-    );
+  isLecturerQuestionsAnswered(): boolean {
+    return !!this.surveyForm.get('lecturer')?.value;
+  }
+
+  isAllSelectionsAnswered() {
+    return this.totalInputs === this.getFormControlsCountWithValues();
   }
 
   checkIfDisciplineLoaded(): void {
-    let currentValue = this.surveyForm.get('title')?.value;
-    if (this.isFirstFourQuestionsAnswered() && !this.disciplineOptionsLoaded) {
+    if (
+      this.isEducationLevelQuestionsAnswered() &&
+      this.isEducationFormQuestionsAnswered() &&
+      this.isEducationStartYearQuestionsAnswered() &&
+      this.isEducationSpecialtyQuestionsAnswered() &&
+      this.disciplineOptionsLoaded === false
+    ) {
       this.fetchDiscipline();
       this.disciplineOptionsLoaded = true;
     }
   }
 
   checkIfLecturerLoaded(): void {
-    if (this.isDisciplineQuestionsAnswered() && !this.lecturerOptionsLoaded) {
+    if (
+      this.isDisciplineQuestionsAnswered() &&
+      this.lecturerOptionsLoaded === false
+    ) {
       this.lecturerOptionsLoaded = true;
       this.fetchLecturers();
     }
   }
 
+  getFormControlsCountWithValues(): number {
+    return Object.values(this.surveyForm.controls).filter(
+      (control) => control.value
+    ).length;
+  }
+
+  getChildrenDataById(parentId: string): string[] {
+    const parentElement = this.renderer.selectRootElement(`#${parentId}`, true);
+    const children = parentElement.querySelectorAll('select');
+    let values: string[] = [];
+    children.forEach((child: HTMLSelectElement) => {
+      values.push(child.value);
+    });
+    return values;
+  }
+
+  // TODO: The lecturer should disappear as option when they are evaluated
   getEducationLevelValues() {
-    return filterObjectPropertyByKey(
-      this.educationLevelOptions,
-      'educationLevel'
-    );
+    return filterObjectPropertyByKey(this.educationLevelArr, 'educationLevel');
   }
 
   getEducationalFormValues() {
     return filterObjectPropertyByKey(
-      this.educationalFormOptions,
+      this.educationalFormArr,
       'educationalForm'
     );
   }
 
   getEducationStartYearValues() {
     return filterObjectPropertyByKey(
-      this.educationStartYearOptions,
+      this.educationStartYearArr,
       'educationStartYear'
     );
   }
 
   getEducationSpecialtyValues() {
     return filterObjectPropertyByKey(
-      this.educationSpecialtyOptions,
+      this.educationSpecialtyArr,
       'educationSpecialty'
     );
   }
 
   getEducationDisciplineValues() {
-    return filterObjectPropertyByKey(this.educationDisciplineOptions, 'title');
+    return filterObjectPropertyByKey(this.educationDisciplineArr, 'title');
   }
 
   getEducationLecturersValues() {
-    return filterObjectPropertyByKey(
-      this.educationLecturersOptions,
-      'lecturer'
-    );
+    return filterObjectPropertyByKey(this.educationLecturersArr, 'lecturer');
   }
 
   onSubmit() {
     this.firstPageCompleted = true;
+  }
+
+  // TODO: Send data
+  onSendAnswers() {
+    let answers: { [key: string]: string } = {};
+    let answer: string[] = this.getChildrenDataById('second-page');
+    for (let i = 0; i < 11; i++) {
+      answers[`answer${i + 1}`] = answer[i];
+    }
+    answers['lecturer'] = this.surveyForm.get('lecturer')?.value;
+    answers['subject'] = this.surveyForm.get('title')?.value;
+    answers['extra'] = this.surveyForm.get('comment')?.value;
+    console.log(answers);
+    this.surveyService.postAnswer(answers);
+    alert('Answers sent!');
+    location.reload();
   }
 }

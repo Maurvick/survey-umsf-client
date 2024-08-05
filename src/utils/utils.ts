@@ -38,15 +38,15 @@ export function filterObjectPropertyByKey(arr: any, propertyKey: string) {
   return propertyValues;
 }
 
-export function filterDuplicates(arr: any[]) {
-  const filteredArr: any[] = [];
-  let currentObj: any = {};
+// export function filterDuplicates(arr: any[]) {
+//   const filteredArr: any[] = [];
+//   let currentObj: any = {};
 
-  for (const obj of arr) {
-    for (const key in obj) {
-      if (obj[key].indexOf() === obj[key]) {
-        currentObj[key] = obj[key];
-      }
-    }
-  }
-}
+//   for (const obj of arr) {
+//     for (const key in obj) {
+//       if (obj[key].indexOf() === obj[key]) {
+//         currentObj[key] = obj[key];
+//       }
+//     }
+//   }
+// }
