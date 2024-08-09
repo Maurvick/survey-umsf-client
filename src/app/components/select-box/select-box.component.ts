@@ -9,22 +9,22 @@ import {
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-survey-select-box',
+  selector: 'app-select-box',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './survey-select-box.component.html',
-  styleUrl: './survey-select-box.component.css',
+  templateUrl: './select-box.component.html',
+  styleUrl: './select-box.component.css',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SurveySelectBoxComponent),
+      useExisting: forwardRef(() => SelectBoxComponent),
       multi: true,
     },
   ],
 })
-export class SurveySelectBoxComponent {
-  @Input() arr: any[] = [];
-  @Input() key: string = '';
+export class SelectBoxComponent {
+  @Input({ required: true }) arr: any[] = [];
+  @Input({ required: true }) key: string = '';
 
   @Output() selectionChange = new EventEmitter<{ id: string; value: string }>();
 
