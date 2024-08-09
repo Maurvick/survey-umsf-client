@@ -1,0 +1,21 @@
+<div>
+  <h2>Статистика</h2>
+
+  <form [formGroup]="resultsForm">
+    <app-select-box
+      [arr]="specialtyArr"
+      [key]="'speciality'"
+      formControlName="speciality"
+    ></app-select-box>
+
+    <app-select-box
+      [arr]="lecturersArr"
+      [key]="'lecturer'"
+      formControlName="lecturer"
+    ></app-select-box>
+
+    <!-- <button (click)="onClick()">Результати</button> -->
+  </form>
+
+  <app-table [headers]="tableHeadingValues" [rows]="lecturerStats"></app-table>
+</div>
