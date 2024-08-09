@@ -71,4 +71,30 @@ export class SurveyService {
     let apiUrl = environment.baseUrl + '/survey/answer/send';
     return this.http.post(apiUrl, answer);
   }
+
+  getLecturerBySpecialty(specialty: string) {
+    let apiUrl =
+      environment.baseUrl + '/survey/subject/getLecturerStatsByParams';
+    let params = {
+      speciality: specialty,
+    };
+    return this.http.get<Survey[]>(apiUrl, { params });
+  }
+
+  getAnswersByLecturer(lecturer: string) {
+    let apiUrl = environment.baseUrl + '/survey/answer/getByLecturer';
+    let params = {
+      lecturer: lecturer,
+    };
+    return this.http.get<Survey[]>(apiUrl, { params });
+  }
+
+  getCommentsByLecturer(lecturer: string) {
+    let apiUrl = environment.baseUrl + '/survey/answer/getCommentByLecturer';
+    let params = {
+      lecturer: lecturer,
+    };
+
+    return this.http.get<Survey[]>(apiUrl, { params });
+  }
 }
