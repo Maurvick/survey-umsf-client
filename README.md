@@ -1,5 +1,10 @@
 # AngularSurveyUmsfClient
 
+![image](https://github.com/user-attachments/assets/602740e4-e2cf-402f-9bd5-516c71ee6bb0)
+
+![image](https://github.com/user-attachments/assets/b8522b78-2dc8-4f7d-9720-11638ab0b996)
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.7.
 
 ## Development server
