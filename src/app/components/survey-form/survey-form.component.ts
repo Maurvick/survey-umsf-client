@@ -160,6 +160,7 @@ export class SurveyFormComponent implements OnInit, OnChanges {
         complete: () => {
           if (this.educationDisciplineArr.length === 0) {
             alert('No data found!');
+            location.reload();
           }
         },
       });
@@ -184,6 +185,7 @@ export class SurveyFormComponent implements OnInit, OnChanges {
         complete: () => {
           if (this.educationLecturersArr.length === 0) {
             alert('No data found!');
+            location.reload();
           }
         },
       });
