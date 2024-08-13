@@ -22,7 +22,6 @@ import { TableComponent } from '../table/table.component';
 export class SurveyResultsComponent implements OnInit {
   specialtyArr: Survey[] = [];
   lecturersArr: Survey[] = [];
-  statsArr: any[] = [];
 
   resultsForm!: FormGroup;
 
@@ -46,13 +45,9 @@ export class SurveyResultsComponent implements OnInit {
     'Середня оцінка',
     'Оцінили',
   ];
-  tableBodyValues: string[] = ['Середня оцінка', ''];
 
-  avgScores = ['', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  countAvg = ['', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-  subject: any[] = [];
   lecturerStats: any[] = [];
+  lecturerComments: any[] = [];
 
   constructor(
     private surveyService: SurveyService,
@@ -121,19 +116,23 @@ export class SurveyResultsComponent implements OnInit {
       });
   }
 
-  getSortedStats() {
-    let arr: string[] = [];
-    for (let obj of this.lecturerStats) {
-      for (let key in obj) {
-        arr.push(obj[key]);
-      }
-    }
-    return arr;
+  fetchComments(): void {
+    this.surveyService
+      .getCommentsByLecturer(this.lecturerSelectValue)
+      .subscribe({
+        next: (data) => {
+          this.lecturerComments = data;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log(this.lecturerComments);
+        },
+      });
   }
 
-  onClick() {}
-
-  createStatsTable() {
-    let table = this.renderer.selectRootElement('#table', true);
-  }
+  // TODO: Round values
+  // TODO: Display comments
+  // TODO: Display avg stats
 }
