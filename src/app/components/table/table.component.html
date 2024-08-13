@@ -1,17 +1,19 @@
-<table>
-  <thead>
-    <tr>
-      <th *ngFor="let header of headers">{{ header }}</th>
-    </tr>
-  </thead>
-  <tbody *ngIf="isTwoDimensionalArray(rows)">
-    <tr *ngFor="let row of rows">
-      <td *ngFor="let cell of row">{{ cell }}</td>
-    </tr>
-  </tbody>
-  <tbody *ngIf="!isTwoDimensionalArray(rows)">
-    <tr>
-      <td *ngFor="let cell of rows">{{ cell }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let header of headers">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="isTwoDimensionalArray(rows)">
+      <tr *ngFor="let row of rows">
+        <td *ngFor="let cell of row">{{ cell }}</td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="!isTwoDimensionalArray(rows)">
+      <tr>
+        <td *ngFor="let cell of rows">{{ cell }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

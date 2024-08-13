@@ -1,16 +1,29 @@
-table {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+.table-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
 }
 
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
+.table-container div {
+  border: 1px solid #ddd;
   padding: 8px;
+  box-sizing: border-box;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  min-width: 100px; /* Ensures columns don’t get too narrow */
+}
+
+/* Container with horizontal scroll */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
 }
