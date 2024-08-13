@@ -38,15 +38,7 @@ export function filterObjectPropertyByKey(arr: any, propertyKey: string) {
   return propertyValues;
 }
 
-// export function filterDuplicates(arr: any[]) {
-//   const filteredArr: any[] = [];
-//   let currentObj: any = {};
-
-//   for (const obj of arr) {
-//     for (const key in obj) {
-//       if (obj[key].indexOf() === obj[key]) {
-//         currentObj[key] = obj[key];
-//       }
-//     }
-//   }
-// }
+// Round a number to 2 decimal places
+export function roundNumberToTwoDecimalPlaces(num: number): number {
+  return Math.round(num * 100) / 100;
+}

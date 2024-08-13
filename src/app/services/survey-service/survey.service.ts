@@ -94,7 +94,6 @@ export class SurveyService {
     let params = {
       lecturer: lecturer,
     };
-
     return this.http.get<Survey[]>(apiUrl, { params });
   }
 }
